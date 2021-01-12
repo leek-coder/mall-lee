@@ -1,0 +1,120 @@
+spring:
+  profiles:
+    active: dev
+#ribbon:    解决Ribbon 第一次调用耗时高的配置
+#  eager-load:
+#    enabled: true     #开启懒加载
+#    clients:         #可以指定多个微服务用逗号分隔
+---
+#开发环境   分库分表
+spring:
+  profiles: dev
+  shardingsphere:
+    datasource:
+      #所有数据源的名称
+      names: ds0
+      #用户 数据源配置
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource    #使用HikariDataSource数据库连接池
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.2.251:3306/private_cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+        username: root
+        password: 101396
+        maxPoolSize: 50
+        minPoolSize: 1
+      #分片规则
+    sharding:
+      tables:
+        #t_user表配置
+        t_user:
+          actual-data-nodes: ds0.t_user_$->{0..1}
+          #主键生成策略
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+            props:
+              worker.id: 100
+              max:
+                tolerate:
+                  time:
+                    difference:
+                      milliseconds: 100
+
+          database-strategy:
+            #  sharding-column:           自定义分配策略
+            #  preciseAlgorithmClassName:
+            inline:
+              sharding-column: user_id
+              algorithm-expression: ds0 #ds$->{user_id % 2}
+          table-strategy:
+            inline:
+              sharding-column:  user_id
+              algorithm-expression: t_user_$->{user_id % 2}
+              #key-generator-column-name: user_id
+              #keyGeneratorClassName: io.shardingsphere.core.keygen.DefaultKeyGenerator
+          default-data-source-name: ds0
+          #defaultKeyGeneratorClassName: io.shardingsphere.core.keygen.DefaultKeyGenerator
+          defaultKeyGenerator:
+            type: SNOWFLAKE
+            column: id
+
+    #扩展配置
+    props:
+      sql.show: true   #打印sql
+  cloud:
+    nacos:
+      discovery:
+        server-addr:  192.168.2.251:8848
+        namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
+      config:
+        server-addr:  192.168.2.251:8848
+        namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
+        file-extension: yaml
+        group: DEFAULT_GROUP
+
+---
+#测试环境  读写分离
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.2.251:8848
+        namespace: dae3b1df-1dae-477c-a6dc-d6015998c879
+      config:
+        server-addr:  192.168.2.251:8848
+        namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
+        file-extension: yaml
+        group: DEFAULT_GROUP
+  # ShardingSphere 配置项
+  shardingsphere:
+    # 数据源配置
+    datasource:
+      # 所有数据源的名字
+      names: ds-master, ds-slave
+      # 主库的数据源配置
+      ds-master:
+        type: com.zaxxer.hikari.HikariDataSource # 使用 Hikari 数据库连接池
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.2.251:3306/private_cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+        username: root
+        password: 101396
+      # 从库数据源配置
+      ds-slave:
+        type: com.zaxxer.hikari.HikariDataSource # 使用 Hikari 数据库连接池
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.2.251:3306/private_cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+        username: root
+        password: 101396
+    # 读写分离配置，对应 YamlMasterSlaveRuleConfiguration 配置类
+    masterslave:
+      name: ms # 名字，任意，需要保证唯一
+      master-data-source-name: ds-master  # 主库数据源
+      slave-data-source-names: ds-slave # 从库数据源
+      #配置负载均衡策略  默认为轮询
+    #      load-balance-algorithm-type:
+    # 拓展属性配置
+    props:
+      sql:
+        show: true # 打印 SQL
+

@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: mall-order
+  profiles:
+    active: test
+server:
+  port: 9999
+
+---
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.2.251:8848
+        namespace: dae3b1df-1dae-477c-a6dc-d6015998c879
+      config:
+        server-addr:  192.168.2.251:8848
+        namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
+        file-extension: yaml
+        group: DEFAULT_GROUP
+
+

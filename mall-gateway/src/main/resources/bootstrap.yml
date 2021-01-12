@@ -1,0 +1,53 @@
+spring:
+  profiles:
+    active: dev
+server:
+  port: 8888
+
+---
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr:  192.168.2.251:8848
+        namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
+      config:
+        server-addr:  192.168.2.251:8848
+        namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
+        file-extension: yaml
+        group: DEFAULT_GROUP
+    gateway:
+      discovery:
+        locator:
+          enabled: false   #是否可以通过微服务来调用 设置为false不可用
+      #          url-expression:  "'lb://' + serviceId"   #路由的目标地址的表达式
+      routes:
+        - id: mall-user #id必须要唯一
+          uri: lb://mall-user      #可设置负载均衡算法
+          predicates:
+            #通过System.out.println(ZonedDateTime.now())
+            - Before=2023-12-16T15:53:22.999+08:00[Asia/Shanghai]
+            #            - Header=User,Token
+            - Path=/resource/**
+          filters:
+            - StripPrefix=1   #是否剥离前缀
+            - AddRequestHeader=name,leek    #为请求下游服务加入请求头
+
+
+
+---
+#测试环境  读写分离
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.2.251:8848
+        namespace: dae3b1df-1dae-477c-a6dc-d6015998c879
+      config:
+        server-addr:  192.168.2.251:8848
+        namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
+        file-extension: yaml
+        group: DEFAULT_GROUP
+

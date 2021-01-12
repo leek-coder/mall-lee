@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huatech.mall.mapper.UcsSubscriptionMapper">
+    <resultMap id="BaseResultMap" type="com.huatech.mall.model.UcsSubscription">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="instance_id" property="instanceId" jdbcType="BIGINT"/>
+        <result column="instance_name" property="instanceName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="service_type" property="serviceType" jdbcType="INTEGER"/>
+        <result column="service_status" property="serviceStatus" jdbcType="INTEGER"/>
+        <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="active_time" property="activeTime" jdbcType="TIMESTAMP"/>
+        <result column="inactive_time" property="inactiveTime" jdbcType="TIMESTAMP"/>
+        <result column="last_status_chg_time" property="lastStatusChgTime" jdbcType="TIMESTAMP"/>
+        <result column="opt_status" property="optStatus" jdbcType="VARCHAR"/>
+        <result column="opt_status_chg_time" property="optStatusChgTime" jdbcType="TIMESTAMP"/>
+        <result column="region_id" property="regionId" jdbcType="BIGINT"/>
+        <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+        <result column="region_code" property="regionCode" jdbcType="VARCHAR"/>
+        <result column="az_id" property="azId" jdbcType="VARCHAR"/>
+        <result column="az_name" property="azName" jdbcType="VARCHAR"/>
+        <result column="az_code" property="azCode" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="tenant_id" property="tenantId" jdbcType="VARCHAR"/>
+        <result column="project_id" property="projectId" jdbcType="BIGINT"/>
+        <result column="cloud_name" property="cloudName" jdbcType="VARCHAR"/>
+        <result column="cloud_code" property="cloudCode" jdbcType="VARCHAR"/>
+        <result column="cloud_type" property="cloudType" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, instance_id, instance_name, status, service_type, service_status, uuid, create_time,
+        active_time, inactive_time, last_status_chg_time, opt_status, opt_status_chg_time,
+        region_id, region_name, region_code, az_id, az_name, az_code, user_id, user_name,
+        tenant_id, project_id, cloud_name, cloud_code, cloud_type
+    </sql>
+
+    <insert id="insert" parameterType="com.huatech.mall.model.UcsSubscription">
+        insert into ucs_subscription (id, instance_id, instance_name,
+        status, service_type, service_status,
+        uuid, create_time, active_time,
+        inactive_time, last_status_chg_time, opt_status,
+        opt_status_chg_time, region_id, region_name,
+        region_code, az_id, az_name,
+        az_code, user_id, user_name,
+        tenant_id, project_id, cloud_name,
+        cloud_code, cloud_type)
+        values (#{id,jdbcType=BIGINT}, #{instanceId,jdbcType=BIGINT}, #{instanceName,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR}, #{serviceType,jdbcType=INTEGER}, #{serviceStatus,jdbcType=INTEGER},
+        #{uuid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{activeTime,jdbcType=TIMESTAMP},
+        #{inactiveTime,jdbcType=TIMESTAMP}, #{lastStatusChgTime,jdbcType=TIMESTAMP}, #{optStatus,jdbcType=VARCHAR},
+        #{optStatusChgTime,jdbcType=TIMESTAMP}, #{regionId,jdbcType=BIGINT}, #{regionName,jdbcType=VARCHAR},
+        #{regionCode,jdbcType=VARCHAR}, #{azId,jdbcType=VARCHAR}, #{azName,jdbcType=VARCHAR},
+        #{azCode,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+        #{tenantId,jdbcType=VARCHAR}, #{projectId,jdbcType=BIGINT}, #{cloudName,jdbcType=VARCHAR},
+        #{cloudCode,jdbcType=VARCHAR}, #{cloudType,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.huatech.mall.mapper.UcsSubscriptionMapper">
+        insert into ucs_subscription
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="instanceId != null">
+                instance_id,
+            </if>
+            <if test="instanceName != null">
+                instance_name,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="serviceType != null">
+                service_type,
+            </if>
+            <if test="serviceStatus != null">
+                service_status,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="activeTime != null">
+                active_time,
+            </if>
+            <if test="inactiveTime != null">
+                inactive_time,
+            </if>
+            <if test="lastStatusChgTime != null">
+                last_status_chg_time,
+            </if>
+            <if test="optStatus != null">
+                opt_status,
+            </if>
+            <if test="optStatusChgTime != null">
+                opt_status_chg_time,
+            </if>
+            <if test="regionId != null">
+                region_id,
+            </if>
+            <if test="regionName != null">
+                region_name,
+            </if>
+            <if test="regionCode != null">
+                region_code,
+            </if>
+            <if test="azId != null">
+                az_id,
+            </if>
+            <if test="azName != null">
+                az_name,
+            </if>
+            <if test="azCode != null">
+                az_code,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="tenantId != null">
+                tenant_id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="cloudName != null">
+                cloud_name,
+            </if>
+            <if test="cloudCode != null">
+                cloud_code,
+            </if>
+            <if test="cloudType != null">
+                cloud_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="instanceId != null">
+                #{instanceId,jdbcType=BIGINT},
+            </if>
+            <if test="instanceName != null">
+                #{instanceName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceType != null">
+                #{serviceType,jdbcType=INTEGER},
+            </if>
+            <if test="serviceStatus != null">
+                #{serviceStatus,jdbcType=INTEGER},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="activeTime != null">
+                #{activeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inactiveTime != null">
+                #{inactiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastStatusChgTime != null">
+                #{lastStatusChgTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="optStatus != null">
+                #{optStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="optStatusChgTime != null">
+                #{optStatusChgTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="regionId != null">
+                #{regionId,jdbcType=BIGINT},
+            </if>
+            <if test="regionName != null">
+                #{regionName,jdbcType=VARCHAR},
+            </if>
+            <if test="regionCode != null">
+                #{regionCode,jdbcType=VARCHAR},
+            </if>
+            <if test="azId != null">
+                #{azId,jdbcType=VARCHAR},
+            </if>
+            <if test="azName != null">
+                #{azName,jdbcType=VARCHAR},
+            </if>
+            <if test="azCode != null">
+                #{azCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="tenantId != null">
+                #{tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="cloudName != null">
+                #{cloudName,jdbcType=VARCHAR},
+            </if>
+            <if test="cloudCode != null">
+                #{cloudCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cloudType != null">
+                #{cloudType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <!-- 自定义 -->
+    <select id="selectByInstanceId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ucs_subscription
+        where instance_id = #{instanceId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

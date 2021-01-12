@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: mall-product-es
+
+server:
+  port: 8889
+#配置mybatis
+mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml
+  type-aliases-package: com.huatech.mall.model
+  mapper-locations: classpath:mapper/*.xml
+

@@ -1,0 +1,446 @@
+全文检索：
+计算机程序通过扫描文章中每一个词，然后对每一个建立索引，在索引中记录该词出现的次数和位置，
+当用户检索时根据创建索引查找，然后直接找到对应文章，类似于通过字典检索字表过程。
+
+只处理文本，不处理语意
+搜索时不区分大小写
+搜索结果存在相关度排序
+
+1:索引 index
+定义：一个索引就是一个拥有几分相识特征的文档集合，用户索引，订单索引，商品索引，分类索引。
+要求：在ES中一个索引由一个名字标示(标示必须全部是小写字母)，对索引中文档进行CRUD时需要使用到索引名称。
+索引就类似于关系型数据库中的Database的概念
+
+2.类型  type
+一个类型是你的索引的一个逻辑上的分类/分区，类似于关系型数据库table的概念
+注意：在ES5.x之前一个索引中确实可以创建一个或多个类型，在ES6.x版本中兼容ES5.x版本之前创建索引，但是在ES6.x版本中
+不能在创建一个索引中多个类型  （ES6.0x之后一个索引只能创建一个类型）
+
+3.映射  mapping
+
+mapping是ES中的一个很重要的内容，它类似于传统关系型数据库中table的schema，用于定义一个索引index中的类型(type)的
+数据结构。用来限定类型中的数据结构(包含那些字段，字段类型是什么。。。)
+
+在ES中，我们可以手动创建type(相当于table)和mapping(相当于scehma)，也可以采用默认创建方式，在默认配置下
+ES可以根据插入的数据自动地创建type以及mapping，mapping中主要包含字段名，字段类型和字段索引类型。
+
+4.文档(document)
+
+一个文档是一个可被索引的基础信息单元，类似于表中的一条记录。
+
+
+索引，类型，映射操作
+
+
+创建索引：
+PUT /索引名    注意：索引名必须全部是小写字母
+PUT /index
+
+删除索引：
+
+查看所有索引：  GET  _cat/indices?v
+查看索引：  GET /index
+删除索引： DELETE /index
+删除所有索引:  DELETE /*
+
+2.创建索引和类型和映射  ： 注意在6.x版本中一个索引只能创建一个类型
+
+1.创建索引时创建类型
+
+text:数据量多的时候可以用
+keyword:数据量少的时候可以用
+
+索引下的类型不能删除
+PUT /ems
+{
+    "settings":{
+      "number_of_shards":2,
+      "number_of_replicas":1
+    },
+      "mappings":
+      {
+           "emp":
+           {
+             "properties":
+             {
+                "id":
+                {
+                   "type":"text",
+                   "index":false,
+                   "analyzer":"ik_max_word",
+                   "search_analyzer":"ik_smart"
+
+                },
+                "name":{
+                 "type":"keyword"
+                },
+                "age":{
+                 "type":"integer"
+                 }
+
+             }
+           }
+      }
+}
+
+3.查看索引类型和映射
+
+GET /index/_mapping/type    后面的type可以不用写
+
+4.文档操作
+ES默认会给每个文档添加一个_id
+
+添加文档
+PUT /index/type/id
+
+查看文档
+GET /index/type/id
+
+删除文档
+DELETE /index/type/id
+
+更新文档
+
+更新原始文档
+POST /index/type/1/_update{
+  "doc":{
+      "name":"leek",
+      "age":10
+   }
+}
+
+POST /index/type/_bulk
+{
+   "index":{"_id":1}
+}
+{"name":"zhangsan","content":"this is a content"}
+
+
+
+
+
+
+PUT /ems
+{
+  "mappings": {
+     "emp":{
+       "properties":{
+          "name":{
+            "type":"keyword"
+          },
+          "age":{
+            "type":"integer"
+          },
+          "bir":{
+            "type":"date"
+          },
+          "content":{
+            "type":"text"
+          },
+          "address":{
+            "type":"keyword"
+          }
+       }
+     }
+  }
+}
+
+
+#批量插入数据
+PUT /ems/emp/_bulk
+  {"index":{}}
+  {"name":"小黑","age":23,"bir":"2012-12-12","content":"为开发团队选择一款优秀的MVC框架是件有趣的事儿","address":"北京"}
+  {"index":{}}
+  {"name":"王小黑","age":24,"bir":"2012-12-12","content":"Spring是一个分层架构","address":"上海"}
+  {"index":{}}
+  {"name":"张小五","age":8,"bir":"2012-12-12","content":"Springcloud作为Java微服务框架","address":"无锡"}
+  {"index":{}}
+  {"name":"win7","age":9,"bir":"2012-12-12","content":"Spring是如何简化Java开发的","address":"南京"}
+  {"index":{}}
+  {"name":"张无忌","age":43,"bir":"2012-12-12","content":"ElasticSearch是一个分布式搜索框架","address":"北京"}
+
+
+检索：
+基于URL的检索    查询所有并按age排序
+GET /ems/emp/_search?q=*&sort=age:asc
+
+
+重点看DSL的检索方式
+
+GET /ems/emp/_search
+{
+   "query":{
+     "match_all": {}
+   }
+}
+
+
+#查询所有返回指定条数
+GET /ems/emp/_search
+{
+  "query":{
+    "match_all": {}
+  },
+  "size": 1
+}
+
+
+
+#排序
+GET /ems/emp/_search
+{
+  "query":{
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "age": {
+        "order": "desc"
+      }
+    }
+  ],
+  "size": 2
+}
+
+
+#查询返回指定字段
+GET /ems/emp/_search
+{
+  "query":{
+    "match_all": {}
+  },
+  "_source": ["name","age","content"],
+  "sort": [
+    {
+      "age": {
+        "order": "asc"
+      }
+    }
+  ]
+}
+
+#基于关键词查询
+GET /ems/emp/_search
+{
+  "query":{
+    "term": {
+      "content": {
+        "value": "spring"
+      }
+    }
+  }
+}
+总结：通过使用term得知，
+1：除了text类型以外所有类型均不分词，
+2：ES默认使用的标准分词器(StandarAnalyzer)(英文单词分词，中文单字分词)
+
+#基于range查询
+GET /ems/emp/_search
+{
+  "query": {
+    "range": {
+      "age": {
+        "gte": 9,
+        "lte": 20
+      }
+    }
+  }
+}
+
+
+
+#基于前缀查询
+GET /ems/emp/_search
+{
+  "query": {
+    "prefix": {
+      "content": {
+        "value": "spring"
+      }
+    }
+  }
+}
+
+
+
+#通配符查询
+GET /ems/emp/_search
+{
+  "query": {
+    "wildcard": {
+      "content": {
+        "value": "spring*"
+      }
+    }
+  }
+}
+
+#多id查询
+GET /ems/emp/_search
+{
+  "query": {
+    "ids": {
+      "values": ["MVs04nYBpNtBqBixcqtn"]
+    }
+  }
+}
+
+#多字段查询  能分词，不会指定分词器
+GET /ems/emp/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "中国",
+      "fields": ["name","content"]
+    }
+  }
+}
+
+# 能分词，能指定分词器
+GET /ems/emp/_search
+{
+  "query": {
+    "query_string": {
+      "default_field": "content",
+      "query": "框架",
+      "analyzer": "standard"
+    }
+  }
+}
+
+
+#标准分词器
+GET _analyze
+{
+  "analyzer": "standard",
+  "text": "我是李可"
+}
+
+
+GET /index/_analyze
+{
+  "field": "address",
+  "text": "我是李可"
+}
+
+GET _analyze
+{
+  "analyzer": "simple",
+  "text": "我是李可"
+}
+
+GET /books/_validate/query?explain
+{
+  "query": {
+    "match": {
+      "bookName": "童话故事大全"
+    }
+  }
+}
+
+
+GET /books/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": {
+            "address": "北京"
+          }
+        },
+        {
+          "match": {
+            "age": "11"
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+
+ES底层索引原理？
+
+分词器：
+定义：就是将一文本中的关键词拆分出来。
+分词特点：拆分关键词，去掉停用词和语气词
+
+ES提供的分词器：
+默认分词器： standard analyzer  英文：单词分词  中文：单字分词
+简单分词器： simple  analyzer   中文：不分词
+
+
+IK 中自定义扩展词和停用词
+
+扩展词
+定义：现有IK分词器无法将这个词切分成一个关键词，但是又希望某个词成为关键词。
+IK 分词器配置文件
+
+停用词：
+定义：现有IK分词器将这个词切分成一个关键词，出于某个原因不想搜索出来这个关键词。
+
+
+配置远程词典
+
+
+修改虚拟机安全策略
+
+
+
+索引的更新机制：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
