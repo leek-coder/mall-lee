@@ -1,5 +1,7 @@
 package com.huatech.mall.array;
 
+import java.util.Arrays;
+
 /**
  * @author like
  * @date 2021-01-22 2:54 下午
@@ -136,7 +138,7 @@ public class ArrayList0<E> {
         for (int i = index; i <= size; i++) {
             elements[i] = elements[i + 1];
         }
-        size--;
+        elements[--size] = null;
         return old;
     }
 
@@ -147,9 +149,17 @@ public class ArrayList0<E> {
      * @return
      */
     public int indexOf(E element) {
-        for (int i = 0; i < size; i++) {
-            if (elements[i].equals(element)) {
-                return i;
+        if (element == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (element.equals(elements[i])) {
+                    return i;
+                }
             }
         }
         return -1;

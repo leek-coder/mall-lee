@@ -1,0 +1,1 @@
+Java源码中ArrayList默认长度为10
