@@ -1,5 +1,7 @@
 package com.huatech.mall.service;
 
+import org.elasticsearch.action.bulk.BulkRequest;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +30,10 @@ public interface ElasticService {
 
 	/**
 	 * 往索引库里批量增加数据
-	 * @param datas
-	 * @param index
-	 * @param type
+	 * @param bulkRequest
 	 * @return
 	 */
-	public Boolean addBulkIn(List<Map<String, Object>> datas, String index, String type);
+	public Boolean addBulkIn(BulkRequest bulkRequest);
 
 	/**
 	 * 删除索引

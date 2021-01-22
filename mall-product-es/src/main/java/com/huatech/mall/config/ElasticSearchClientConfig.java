@@ -17,7 +17,7 @@ public class ElasticSearchClientConfig {
     public RestHighLevelClient restHighLevelClient() {
         //配置es地址和端口，这里只是配置了一台es服务器
         RestHighLevelClient client =
-                new RestHighLevelClient(RestClient.builder(new HttpHost("192.168.2.251", 19200, "http")));
+                new RestHighLevelClient(RestClient.builder(new HttpHost("10.10.14.251", 19200, "http")));
         return client;
     }
 }

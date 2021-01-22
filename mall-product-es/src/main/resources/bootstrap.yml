@@ -7,25 +7,27 @@ spring:
   #      uris: http://192.168.2.251:19200   #如果是集群用逗号隔开
   #      connection-timeout: 5s
   #配置redis
-  redis:
-    cluster:
-    #  获取失败 最大重定向次数
-      max-redirects: 3
-      nodes: 47.95.212.30:6379
+#  redis:
+#    cluster:
+#    #  获取失败 最大重定向次数
+#      max-redirects: 3
+#      nodes: 47.95.212.30:6379
     #配置数据库
-    database: 0
-    password:
-    timeout: 2000
-    lettuce:
-        pool:
-      # 连接池最大连接数（使用负值表示没有限制）
-          max-active: 1000
-      # 连接池中的最大空闲连接
-          max-idle: 100
-      # 连接池中的最小空闲连接
-          min-idle: 20
-      # 连接池最大阻塞等待时间（使用负值表示没有限制)
-          max-wait: 6000
+#    database: 0
+#    password:
+#    timeout: 2000
+#    lettuce:
+#        pool:
+#      # 连接池最大连接数（使用负值表示没有限制）
+#          max-active: 1000
+#      # 连接池中的最大空闲连接
+#          max-idle: 100
+#      # 连接池中的最小空闲连接
+#          min-idle: 20
+#      # 连接池最大阻塞等待时间（使用负值表示没有限制)
+#          max-wait: 6000
+#    url: 47.95.212.30
+#    port: 6379
   datasource:
       url: jdbc:mysql://localhost:3306/shellmall?characterEncoding=utf-8
       driver-class-name: com.mysql.jdbc.Driver

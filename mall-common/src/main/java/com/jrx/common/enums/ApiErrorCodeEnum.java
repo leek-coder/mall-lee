@@ -14,6 +14,7 @@ public enum ApiErrorCodeEnum {
     ERROR_NOT_CHECK_BIND_ROUTER_EXTERNAL_NETWORK(1102, "子网关联路由无外部网络信息"),
     ERROR_CLOUD_ID_FORMAT(1001, "云服务商ID参数错误"),
     ERROR_CLOUD_NOT_EXIST(1002, "云服务商不存在"),
+    ERROR_BUILD_INDEX_FAIL(1003, "构建索引库失败"),
     UNAUTHORIZED(401,"未认证，签名错误"),
     ;
     private Integer code;

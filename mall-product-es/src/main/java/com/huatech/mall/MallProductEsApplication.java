@@ -3,6 +3,7 @@ package com.huatech.mall;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 启动类
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  **/
 @SpringBootApplication
 @MapperScan(basePackages = "com.huatech.mall.mapper")
+@ComponentScan(basePackages = {"com.jrx.common.exception","com.huatech.mall"})
 public class MallProductEsApplication {
 
     public static void main(String[] args) {

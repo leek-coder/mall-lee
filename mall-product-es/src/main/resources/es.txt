@@ -26,9 +26,69 @@ Canal的作用：
 源为mysql数据库
 同步到es或者其它的地方
 
-
-
 如何搭建一套搜索引擎的架构：
+DELETE /*
+
+PUT /books
+{
+    "settings":{
+      "number_of_shards":2,
+      "number_of_replicas":1
+    },
+      "mappings":
+      {
+           "book":
+           {
+             "properties":
+             {
+                "bookId":
+                {
+                   "type":"integer",
+                   "index":false
+
+                },
+                "bookName":{
+                 "type":"keyword"
+                },
+                "bookEnName":{
+                 "type":"integer"
+                 },
+                 "author":{
+                   "type":"keyword"
+                 },
+                 "imgUrl":{
+                   "type":"keyword",
+                   "index":false
+                 },
+                 "createTime":{
+                   "type":"date"
+                 },
+                 "status":{
+                  "type":"integer"
+                 },
+                 "description":{
+                   "type":"text",
+                    "analyzer":"ik_max_word",
+                    "search_analyzer":"ik_smart"
+                 },
+                 "price":{
+                   "type":"integer"
+                 },
+                 "category":{
+                   "type":"keyword"
+
+                 },
+                 "commentNum":{
+                   "type":"integer"
+                 }
+
+             }
+           }
+      }
+}
+
+
+
 
 
 

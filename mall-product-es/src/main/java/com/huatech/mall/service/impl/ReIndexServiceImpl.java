@@ -16,6 +16,8 @@ import com.huatech.mall.service.ReIndexService;
 import com.huatech.mall.service.ReadBookService;
 import com.huatech.mall.service.RedisService;
 import com.huatech.mall.util.RedisKey;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.index.IndexRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -41,16 +43,17 @@ public class ReIndexServiceImpl implements ReIndexService {
     @Override
     public boolean reIndexBooks() {
         log.info("开始对books索引进行全量重建");
-        String updateCore = redisService.get(RedisKey.cache_keys("cores", "update"), String.class);
-        if (StringUtils.isEmpty(updateCore)) {
-            updateCore = "book1";
-        }
-        String currentCore = redisService.get(RedisKey.cache_keys("cores", "current"), String.class);
-        if (StringUtils.isEmpty(currentCore)) {
-            currentCore = "book";
-        }
-        log.info("当前备份的索引集合为{}，正在服务中的索引集合为{}", updateCore, currentCore);
+//        String updateCore = redisService.get(RedisKey.cache_keys("cores", "update"), String.class);
+//        if (StringUtils.isEmpty(updateCore)) {
+//            updateCore = "book1";
+//        }
+//        String currentCore = redisService.get(RedisKey.cache_keys("cores", "current"), String.class);
+//        if (StringUtils.isEmpty(currentCore)) {
+//            currentCore = "book";
+//        }
+//        log.info("当前备份的索引集合为{}，正在服务中的索引集合为{}", updateCore, currentCore);
 
+        String updateCore = "book";
         // 如果数据量达到上亿级那则需要引入大数据处理系统，hadoop，进行离线索引重建
         int total = bookService.getBookCount();
         int size = 100;
@@ -71,8 +74,8 @@ public class ReIndexServiceImpl implements ReIndexService {
                 @Override
                 public void run() {
                     List<Book> books = bookService.getPageList(p, size);
+                    BulkRequest bulkRequest = new BulkRequest();
                     if (books != null && books.size() > 0) {
-                        List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
                         for (Book bookPd : books) {
                             Map<String, Object> map = new HashMap<String, Object>();
                             map.put("bookId", bookPd.getId());
@@ -86,9 +89,9 @@ public class ReIndexServiceImpl implements ReIndexService {
                             map.put("price", bookPd.getPrice());
                             map.put("category", bookPd.getCategory());
                             map.put("commentNum", bookPd.getCommentNum());
-                            datas.add(map);
+                            bulkRequest.add(new IndexRequest(core,"_doc").source(map));
                         }
-                        elasticService.addBulkIn(datas, core, "_doc");
+                        elasticService.addBulkIn(bulkRequest);
                         log.info("books的page={}索引重建成功", p);
                     }
                 }
@@ -103,10 +106,10 @@ public class ReIndexServiceImpl implements ReIndexService {
             e.printStackTrace();
         }
         log.info("对books索引全量重建完成,进行集合的切换");
-        redisService.set(RedisKey.cache_keys("cores", "update"), currentCore);
-        redisService.set(RedisKey.cache_keys("cores", "current"), updateCore);
-
-        log.info("切换成功,当前备份的索引集合为{}，正在服务中的索引集合为{}", currentCore, updateCore);
+//        redisService.set(RedisKey.cache_keys("cores", "update"), currentCore);
+//        redisService.set(RedisKey.cache_keys("cores", "current"), updateCore);
+//
+//        log.info("切换成功,当前备份的索引集合为{}，正在服务中的索引集合为{}", currentCore, updateCore);
         return true;
     }
 

@@ -11,6 +11,11 @@ import java.util.concurrent.TimeUnit;
  **/
 public class BasicConstants {
     public static Integer SERVICE_TYPE = 1001;
+
+    /**
+     * 构建索引成功
+     */
+    public static Integer BUILD_INDEX_SUCCESS = 200;
     /**
      * 统一线程池
      * 核心线程10个
