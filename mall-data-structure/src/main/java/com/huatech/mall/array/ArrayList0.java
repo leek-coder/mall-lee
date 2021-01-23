@@ -1,18 +1,13 @@
 package com.huatech.mall.array;
 
-import java.util.Arrays;
+import com.huatech.mall.link.AbstractList0;
 
 /**
  * @author like
  * @date 2021-01-22 2:54 下午
  **/
-public class ArrayList0<E> {
+public class ArrayList0<E> extends AbstractList0<E> {
 
-
-    /**
-     * 元素的数量
-     */
-    private int size;
 
     /**
      * 所有的元素
@@ -37,6 +32,7 @@ public class ArrayList0<E> {
     /**
      * 清除所有元素
      */
+    @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
             elements[i] = null;
@@ -44,42 +40,6 @@ public class ArrayList0<E> {
         size = 0;
     }
 
-    /**
-     * 元素的数量
-     *
-     * @return
-     */
-    public int size() {
-        return size;
-    }
-
-    /**
-     * 是否为空
-     *
-     * @return
-     */
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    /**
-     * 是否包含某个元素
-     *
-     * @param element
-     * @return
-     */
-    public boolean contains(E element) {
-        return indexOf(element) == -1;
-    }
-
-    /**
-     * 添加元素到尾部
-     *
-     * @param element
-     */
-    public void add(E element) {
-        add(size, element);
-    }
 
     /**
      * 获取index位置的元素
@@ -87,6 +47,7 @@ public class ArrayList0<E> {
      * @param index
      * @return
      */
+    @Override
     public E get(int index) {
         rangeCheck(index);
         return elements[index];
@@ -99,6 +60,7 @@ public class ArrayList0<E> {
      * @param element
      * @return 原来的元素ֵ
      */
+    @Override
     public E set(int index, E element) {
         rangeCheck(index);
         E old = elements[index];
@@ -113,6 +75,7 @@ public class ArrayList0<E> {
      * @param index
      * @param element
      */
+    @Override
     public void add(int index, E element) {
 
         rangeCheckForAdd(index);
@@ -131,6 +94,7 @@ public class ArrayList0<E> {
      * @param index
      * @return
      */
+    @Override
     public E remove(int index) {
         rangeCheck(index);
         E old = elements[index];
@@ -148,6 +112,7 @@ public class ArrayList0<E> {
      * @param element
      * @return
      */
+    @Override
     public int indexOf(E element) {
         if (element == null) {
             for (int i = 0; i < size; i++) {
@@ -189,13 +154,6 @@ public class ArrayList0<E> {
     }
 
 
-    private void rangeCheckForAdd(int index) {
-
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
-    }
-
     @Override
     public String toString() {
 
@@ -213,14 +171,4 @@ public class ArrayList0<E> {
     }
 
 
-    /**
-     * 校验范围
-     *
-     * @param index
-     */
-    private void rangeCheck(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
-    }
 }
