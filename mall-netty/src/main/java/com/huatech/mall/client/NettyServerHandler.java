@@ -8,6 +8,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
 import io.netty.util.CharsetUtil;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author like
  * ChannelInboundHandler
@@ -35,17 +37,45 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         Channel channel = ctx.channel();
         ChannelPipeline pipeline = channel.pipeline();
         ChannelPipeline pipeline1 = ctx.pipeline();
-        System.out.println(pipeline==pipeline1);
+        System.out.println(pipeline == pipeline1);
         //pipeline 本质是一个双向链表
         System.out.println("看看channel和pipeline的关系");
         //将msg转化成一个ByteBuf，ByteBuf是netty提供的，不是NIO提供的ByteBuffer
         ByteBuf byteBuf = (ByteBuf) msg;
         System.out.println("客户端发送的信息是:" + byteBuf.toString(CharsetUtil.UTF_8));
         System.out.println("客户端地址为:" + channel.remoteAddress());
+
+        //比如这里我们有一个非常耗时间的业务-->异步执行--->提交该channel对应的NiOEventLoop的taskQueue中
+
+//        ctx.channel().eventLoop().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(10000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
+        ctx.channel().eventLoop().schedule(new Runnable() {
+            //用户自定义定时任务-> 该任务提交到scheduleTaskQueue中
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 5, TimeUnit.SECONDS);
+
+
     }
 
     /**
      * 数据读取完毕
+     *
      * @param ctx
      * @throws Exception
      */
@@ -58,6 +88,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 处理异常，一般需要关闭通道
+     *
      * @param ctx
      * @param cause
      * @throws Exception

@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.95.212.30:8848
+        namespace: 2baa28a9-1077-4427-8f40-dbcc8fb69132
+      config:
+        server-addr:  47.95.212.30:8848
+        namespace: 2baa28a9-1077-4427-8f40-dbcc8fb69132
+        file-extension: yaml
+        group: DEFAULT_GROUP

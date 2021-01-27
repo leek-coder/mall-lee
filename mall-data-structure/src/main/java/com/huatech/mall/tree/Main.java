@@ -1,7 +1,6 @@
 package com.huatech.mall.tree;
 
 import com.huatech.mall.tree.printer.BinaryTrees;
-import com.sun.source.tree.BinaryTree;
 
 import java.util.Comparator;
 

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: mall-chat
+
+server:
+  port: 8888
+#配置mybatis
+mybatis:
+  type-aliases-package: com.huatech.mall.model
+  mapper-locations: classpath:mapper/*.xml

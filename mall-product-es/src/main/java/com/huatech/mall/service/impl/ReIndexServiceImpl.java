@@ -1,6 +1,5 @@
 package com.huatech.mall.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +14,9 @@ import com.huatech.mall.service.ElasticService;
 import com.huatech.mall.service.ReIndexService;
 import com.huatech.mall.service.ReadBookService;
 import com.huatech.mall.service.RedisService;
-import com.huatech.mall.util.RedisKey;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 
 import lombok.extern.slf4j.Slf4j;

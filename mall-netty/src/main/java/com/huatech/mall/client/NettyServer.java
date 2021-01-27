@@ -8,7 +8,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.serialization.ClassResolver;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.string.StringDecoder;
@@ -58,8 +57,14 @@ public class NettyServer {
             });
             //绑定端口并且同步，生成一个channelFuture对象
             ChannelFuture cf = serverBootstrap.bind("127.0.0.1",9000).sync();
+            //给cf注册监听器，监听我们关心的事件
+
             //注册一个监听器，此处不是关闭服务器，而是"监听"关闭
             cf.channel().closeFuture().sync();
+
+
+
+
             System.out.println("netty server start=====");
 
         } catch (InterruptedException e) {

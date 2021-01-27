@@ -6,7 +6,6 @@ import com.google.common.collect.Lists;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 
