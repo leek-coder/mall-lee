@@ -15,10 +15,16 @@ public enum ApiErrorCodeEnum {
     ERROR_CLOUD_ID_FORMAT(1001, "云服务商ID参数错误"),
     ERROR_CLOUD_NOT_EXIST(1002, "云服务商不存在"),
     ERROR_BUILD_INDEX_FAIL(1003, "构建索引库失败"),
+    USER_NOT_EXISTS(1004,"用户不存在"),
+    USER_EXISTS(1005,"用户已存在"),
+    PASSWORD_ERROR(2002,"密码错误" ),
     UNAUTHORIZED(401, "未认证，签名错误"),
     TOKEN_FAIL(4000, "Token验证失败"),
     TOKEN_IS_EXPIRED(4001, "Token已过期"),
     TOKEN_IS_VALID(4002, "Token不合法"),
+    REMOTE_SERVICE_FAIL(5000, "远程服务调用失败"),
+    JSON_TRANS_ERROR(5001, "参数转化异常"),
+    AUTH_REMOTE_FAIL(5002, "远程调用鉴权服务失败"),
     ;
     private Integer code;
     private String message;

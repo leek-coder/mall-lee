@@ -13,4 +13,5 @@ public class UserAuthFeignServiceFallback implements IUserAuthFeignService {
     public ResponseResult parseToken(String token) {
         return ResponseResult.failure(-1, "调用远程服务失败");
     }
+
 }

@@ -1,12 +1,14 @@
 package com.huatech.mall.controller;
 
+import com.huatech.mall.dto.LoginUserRes;
 import com.huatech.mall.service.IUserService;
+import com.huatech.mall.vo.LoginParam;
 import com.jrx.common.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * 用户控制器
@@ -21,10 +23,20 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ResponseResult user() {
 
-        return ResponseResult.success("leek");
+    @PutMapping(value = "/register")
+    public ResponseResult register(@RequestBody @Valid LoginParam loginParam) {
+        LoginParam register = userService.register(loginParam);
+        return ResponseResult.success(register);
     }
+
+    @PutMapping(value = "/login")
+    public ResponseResult user(@RequestBody @Valid LoginParam loginParam) {
+        LoginUserRes login = userService.login(loginParam);
+        return ResponseResult.success(login);
+    }
+
+
 }

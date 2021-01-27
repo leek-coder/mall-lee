@@ -6,7 +6,7 @@ package com.huatech.mall.model;
  * @author like 
  * @date 2021-01-27 
  */
-public class User {
+public class Users {
     /**
      * 
      * 表字段:id

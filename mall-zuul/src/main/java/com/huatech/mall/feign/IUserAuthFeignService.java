@@ -3,6 +3,8 @@ package com.huatech.mall.feign;
 import com.jrx.common.response.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author like
  * @date 2019-12-11 11:41 上午
  **/
-@FeignClient(name = "user-auth-service", fallback = UserAuthFeignServiceFallback.class)
+@FeignClient(value = "mall-auth", fallback = UserAuthFeignServiceFallback.class)
 public interface IUserAuthFeignService {
     /**
      * 验证token合法性
@@ -20,5 +22,6 @@ public interface IUserAuthFeignService {
      */
     @GetMapping(value = "/token/parse")
     ResponseResult parseToken(@RequestParam("token") String token);
+
 
 }

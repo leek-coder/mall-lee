@@ -1,10 +1,30 @@
 spring:
   application:
     name: mall-chat
-
+  redis:
+    timeout: 6000
+    password:
+    host: 47.95.212.30
+    port: 6379
 server:
   port: 8888
 #配置mybatis
 mybatis:
   type-aliases-package: com.huatech.mall.model
   mapper-locations: classpath:mapper/*.xml
+
+#配置ribbon连接参数
+ribbon:
+  # # 请求处理的超时时间 下级服务响应最大时间,超出时间消费方（路由也是消费方）返回timeout
+  ReadTimeout: 90000
+  # 请求连接的超时时间- 限制20秒内必须请求到服务，并不限制服务处理的返回时间
+  ConnectTimeout: 15000
+jwt:
+  header: authorization
+  secret: shell-mall
+  expiration: 140000
+  issuer: auth_server
+  tokenType: access_type
+redis:
+  token:
+    prefix: LOGIN_USER_

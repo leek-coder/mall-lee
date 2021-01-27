@@ -48,4 +48,14 @@ public class AuthUserController {
         JwtUser jwtUser = authService.parseToken(token);
         return ResponseResult.success(jwtUser);
     }
+
+    /**
+     * 解析token中的用户
+     *
+     * @return
+     */
+    @GetMapping(value = "/test")
+    public ResponseResult<JwtUser> test() {
+        return ResponseResult.success("aaaa");
+    }
 }

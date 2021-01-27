@@ -1,0 +1,6 @@
+spring:
+  #配置应用名称
+  application:
+    name: mall-zuul
+server:
+  port: 6666

@@ -16,12 +16,11 @@ public class BasicConstants {
      * 构建索引成功
      */
     public static Integer BUILD_INDEX_SUCCESS = 200;
+
     /**
-     * 统一线程池
-     * 核心线程10个
-     * 最大线程1000个
+     * 调用远程服务成功表示码
      */
-    static BlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue<>(1000);
-    public final static ThreadPoolExecutor executorService =
-            new ThreadPoolExecutor(10, 100, 1000L, TimeUnit.SECONDS, blockingQueue);
+    public static final Integer REMOTE_SUCCESS = 200;
+
+
 }

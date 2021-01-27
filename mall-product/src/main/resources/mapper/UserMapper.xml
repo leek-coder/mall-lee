@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huatech.mall.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.huatech.mall.model.User">
+    <resultMap id="BaseResultMap" type="com.huatech.mall.model.Users">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <id column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -20,7 +20,7 @@
         email, locked, description, create_time
     </sql>
 
-    <insert id="insert" parameterType="com.huatech.mall.model.User">
+    <insert id="insert" parameterType="com.huatech.mall.model.Users">
         insert into t_user (id,user_id, user_name, nick_name,
         sex, telephone, password, delete_status,
         email, locked, description,
