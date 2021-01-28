@@ -30,13 +30,11 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
     protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception {
 
         //判断msg是不是HttpRequest类型
-
         if (msg instanceof HttpRequest) {
-            HttpRequest httpRequest = (HttpRequest)msg;
+            HttpRequest httpRequest = (HttpRequest) msg;
             //获取uri
             URI uri = new URI(httpRequest.uri());
             //可以通过uri对资源进行过滤
-
             System.out.println("msg类型=" + msg.getClass());
             System.out.println("客户端地址" + ctx.channel().remoteAddress());
             //回复信息给浏览器[Http协议]
@@ -49,5 +47,45 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
         }
 
 
+    }
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel注册");
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel移除");
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("handler移除");
+    }
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("handler添加");
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel活跃");
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel不活跃");
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel读取完毕");
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("channel异常了");
     }
 }

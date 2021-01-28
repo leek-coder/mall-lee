@@ -31,7 +31,7 @@ public class TestServer {
                     //给我们的workerGroup的EventLoop设置处理器
                             childHandler(new TestServerInitializer());
             //绑定端口并且同步，生成一个channelFuture对象
-            ChannelFuture cf = serverBootstrap.bind("127.0.0.1", 6668).sync();
+            ChannelFuture cf = serverBootstrap.bind(8080).sync();
             //注册一个监听器，此处不是关闭服务器，而是"监听"关闭
             cf.channel().closeFuture().sync();
 

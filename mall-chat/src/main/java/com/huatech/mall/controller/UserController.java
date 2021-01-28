@@ -26,15 +26,24 @@ public class UserController extends BaseController {
 
     @Autowired
     private IUserService userService;
-    
 
 
+    /**
+     * 用户注册
+     * @param loginParam
+     * @return
+     */
     @PutMapping(value = "/register")
     public ResponseResult register(@RequestBody @Valid LoginParam loginParam) {
         LoginParam register = userService.register(loginParam);
         return ResponseResult.success(register);
     }
 
+    /**
+     * 用户登陆
+     * @param loginParam
+     * @return
+     */
     @PutMapping(value = "/login")
     public ResponseResult user(@RequestBody @Valid LoginParam loginParam) {
         LoginUserRes login = userService.login(loginParam);
@@ -42,7 +51,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 修改用户昵称
+     * 修改用户信息
      * @param userParam
      * @return
      */
@@ -53,8 +62,5 @@ public class UserController extends BaseController {
         userService.update(userParam);
         return ResponseResult.success();
     }
-
-
-
 
 }

@@ -1,7 +1,10 @@
 package com.huatech.mall.dao;
 
 import com.huatech.mall.model.Friends;
-
+/**
+ * @author like
+ * @date 2020-08-20 8:07 下午
+ **/
 public interface FriendsMapper {
     /**
      * 根据主键删除 
