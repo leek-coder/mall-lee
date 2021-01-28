@@ -1,4 +1,4 @@
-package com.huatech.mall.controller;
+package com.huatech.mall.controller.auth;
 
 import com.huatech.mall.entity.User;
 import com.huatech.mall.service.IAuthService;

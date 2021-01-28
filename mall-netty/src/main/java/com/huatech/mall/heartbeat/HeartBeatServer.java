@@ -10,6 +10,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
@@ -26,6 +28,8 @@ public class HeartBeatServer {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(boss, worker)
                     .channel(NioServerSocketChannel.class)
+                    //在boss上添加一个日志handler
+                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
@@ -35,6 +39,9 @@ public class HeartBeatServer {
                             //IdleStateHandler的readerIdleTime参数指定超过3秒还没收到客户端的连接，
                             //会触发IdleStateEvent事件并且交给下一个handler处理，下一个handler必须
                             //实现userEventTriggered方法处理对应事件
+                            //readerIdleTime：表示多长时间没有读，就会发送一个心跳检测包检测是否连接
+                            //writerIdleTime：表示多长时间没有写，就会发送一个心跳检测包检测是否连接
+                            //allIdleTime：表示多长时间没有读写，就会发送一个心跳检测包检测是否连接
                             pipeline.addLast(new IdleStateHandler(3, 0, 0, TimeUnit.SECONDS));
                             pipeline.addLast(new HeartBeatServerHandler());
                         }

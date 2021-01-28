@@ -1,6 +1,6 @@
 spring:
   #配置服务名称
   application:
-     name: mall-auth-service
+     name: mall-common-service
 server:
   port: 1003

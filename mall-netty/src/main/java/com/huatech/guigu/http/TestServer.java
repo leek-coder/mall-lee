@@ -26,7 +26,7 @@ public class TestServer {
             serverBootstrap.group(boss, worker).
                     //使用NioServerSocketChannel作为服务器的通道实现
                             channel(NioServerSocketChannel.class).
-                    //设置线程队列得到连接个数
+                    //设置线程队列可连接的队列大小
                             option(ChannelOption.SO_BACKLOG, 1024).
                     //给我们的workerGroup的EventLoop设置处理器
                             childHandler(new TestServerInitializer());

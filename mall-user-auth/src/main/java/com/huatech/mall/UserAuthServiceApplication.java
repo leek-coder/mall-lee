@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  **/
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackages = {"com.jrx.common.utils","com.huatech.mall"})
+@ComponentScan(basePackages = {"com.jrx.common","com.huatech.mall"})
 public class UserAuthServiceApplication {
 
     public static void main(String[] args) {

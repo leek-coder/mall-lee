@@ -1,9 +1,11 @@
 package com.huatech.mall.config;
 
 import com.github.tobato.fastdfs.domain.StorePath;
+import com.github.tobato.fastdfs.exception.FdfsUnsupportStorePathException;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,6 +43,23 @@ public class FastClientWrapper {
         Map<String, String> map = new HashedMap();
         map.put("path", fileUrl);
         return map;
+    }
+
+    /**
+     * 删除文件
+     * @param fileUrl 文件访问地址
+     * @return
+     */
+    public void deleteFile(String fileUrl) {
+        if (StringUtils.isEmpty(fileUrl)) {
+            return;
+        }
+        try {
+            StorePath storePath = StorePath.praseFromUrl(fileUrl);
+            storageClient.deleteFile(storePath.getGroup(), storePath.getPath());
+        } catch (FdfsUnsupportStorePathException e) {
+            e.getMessage();
+        }
     }
 
 }
