@@ -103,7 +103,7 @@ public class JwtUtils {
         try {
             final Claims claims = getClaimsFromToken(token);
             String userName = (String) claims.get("userName");
-            Integer id = (Integer) claims.get("id");
+            Long id = (Long) claims.get("id");
             long value = id.longValue();
             String nickName = (String) claims.get("nickName");
             JwtUser jwtUser = JwtUser.builder().userName(userName).id(value).nickName(nickName).build();

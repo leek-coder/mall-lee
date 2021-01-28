@@ -2,8 +2,5 @@ spring:
   #配置服务名称
   application:
      name: mall-auth-service
-  redis:
-    timeout: 6000
-    password:
-    host: 47.95.212.30
-    port: 6379
+server:
+  port: 1003

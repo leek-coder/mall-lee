@@ -2,7 +2,6 @@ spring:
   profiles:
     active: dev
 
-
 ---
 spring:
   profiles: dev
@@ -16,3 +15,4 @@ spring:
         namespace: 2baa28a9-1077-4427-8f40-dbcc8fb69132
         file-extension: yaml
         group: DEFAULT_GROUP
+        shared-dataids: mall-chat-common.yaml

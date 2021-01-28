@@ -2,6 +2,7 @@ package com.huatech.mall.service;
 
 import com.huatech.mall.dto.LoginUserRes;
 import com.huatech.mall.vo.LoginParam;
+import com.huatech.mall.vo.UserParam;
 
 /**
  * @author like
@@ -26,5 +27,9 @@ public interface IUserService {
     LoginParam register(LoginParam loginParam);
 
 
-
+    /**
+     * 更改用户信息
+     * @param userParam
+     */
+    void update(UserParam userParam);
 }

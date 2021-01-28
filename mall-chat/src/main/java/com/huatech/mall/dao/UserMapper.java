@@ -1,6 +1,7 @@
 package com.huatech.mall.dao;
 
 import com.huatech.mall.model.Users;
+import com.huatech.mall.vo.UserParam;
 
 public interface UserMapper {
     /**
@@ -51,4 +52,10 @@ public interface UserMapper {
      * @return
      */
     Users findUserByUserName(String userName);
+
+    /**
+     * 更新用户信息
+     * @param userParam
+     */
+    void updateUserInfo(UserParam userParam);
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author like
  * @date 2019-12-11 11:41 上午
  **/
-@FeignClient(value = "mall-auth", fallback = UserAuthFeignServiceFallback.class)
+@FeignClient(value = "mall-auth-service", fallback = UserAuthFeignServiceFallback.class)
 public interface IUserAuthFeignService {
     /**
      * 验证token合法性

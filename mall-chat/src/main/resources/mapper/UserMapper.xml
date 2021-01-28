@@ -135,4 +135,29 @@
             username = #{userName,jdbcType=VARCHAR}
         </where>
     </select>
+
+    <select id="updateUserInfo" parameterType="com.huatech.mall.vo.UserParam">
+        update user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="faceImage != null">
+                face_image = #{faceImage,jdbcType=VARCHAR},
+            </if>
+            <if test="faceImageBig != null">
+                face_image_big = #{faceImageBig,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="qrcode != null">
+                qrcode = #{qrcode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{userId,jdbcType=VARCHAR}
+    </select>
 </mapper>

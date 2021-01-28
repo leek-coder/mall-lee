@@ -8,6 +8,7 @@ import com.huatech.mall.service.IAuthUserFeignService;
 import com.huatech.mall.service.IUserService;
 import com.huatech.mall.utils.Md5Utils;
 import com.huatech.mall.vo.LoginParam;
+import com.huatech.mall.vo.UserParam;
 import com.jrx.common.constants.BasicConstants;
 import com.jrx.common.enums.ApiErrorCodeEnum;
 import com.jrx.common.exception.ExceptionCustomer;
@@ -86,5 +87,10 @@ public class UserServiceImpl implements IUserService {
         users.setUsername(loginParam.getUserName());
         userMapper.insertSelective(users);
         return loginParam;
+    }
+
+    @Override
+    public void update(UserParam userParam) {
+        userMapper.updateUserInfo(userParam);
     }
 }
