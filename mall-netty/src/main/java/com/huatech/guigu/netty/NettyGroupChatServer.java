@@ -6,6 +6,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
@@ -37,6 +38,7 @@ public class NettyGroupChatServer {
                             pipeline.addLast("decoder", new StringDecoder());
                             //向pipeline加入编码器
                             pipeline.addLast("encoder", new StringEncoder());
+//                            pipeline.addLast(new ProtobufEncoder());
                             pipeline.addLast(new ChatServerHandler());
                             //加入自己的业务处理handler
                         }
