@@ -1,1 +1,4 @@
+汪文君 --- Java8视频记录
 Stream
+如果一个接口只有一个方法，你可以标记称@FuncationInterface
+

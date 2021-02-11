@@ -139,7 +139,6 @@ P65:ThreadLocal
 使用ThreadLocal线程机制，可以优化上下文数据传递问题
 
 
-看到P150
 
 
 

@@ -1,0 +1,5 @@
+red=com.huatech.mall.spi.impl.RedColor
+black=com.huatech.mall.spi.impl.BlackColor
+benz=com.huatech.mall.spi.impl.BenzColor
+proxy=com.huatech.mall.spi.impl.AdaptiveColor
+#com.huatech.mall.spi.impl.WrapperColor

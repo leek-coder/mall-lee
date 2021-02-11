@@ -1,0 +1,24 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="dubbo-provider"/>
+    <!--
+      集群配置
+     <dubbo:registry address="zookeeper://10.20.153.10:2181?backup=10.20.153.11:2181,10.20.153.12:2181" />
+    -->
+    <!--register=false时，此实例不会注册到注册中心-->
+    <!--check是否要检测注册中心可用-->
+    <dubbo:registry address="zookeeper://localhost:2181"/>
+
+    <dubbo:protocol name="dubbo" port="-1"/>
+
+    <dubbo:service interface="com.huatech.dubbo.IUserService" ref="userService"/>
+    <dubbo:service interface="com.huatech.dubbo.IPersonService" ref="personService"/>
+
+    <bean id="userService" class="com.huatech.mall.impl.UserServiceImpl"/>
+
+    <bean id="personService" class="com.huatech.mall.impl.PersonServiceImpl"/>
+
+</beans>
