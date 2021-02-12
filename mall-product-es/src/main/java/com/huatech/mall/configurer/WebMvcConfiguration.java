@@ -7,8 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jrx.common.enums.ApiErrorCodeEnum;
-import com.jrx.common.response.ResponseResult;
+import com.huatech.mall.enums.ApiErrorCodeEnum;
+import com.huatech.mall.response.ResponseResult;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.converter.HttpMessageConverter;

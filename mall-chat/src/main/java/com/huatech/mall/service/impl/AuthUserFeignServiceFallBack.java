@@ -1,9 +1,8 @@
 package com.huatech.mall.service.impl;
 
 import com.huatech.mall.service.IAuthUserFeignService;
-import com.jrx.common.enums.ApiErrorCodeEnum;
-import com.jrx.common.response.ResponseResult;
-import com.jrx.common.utils.Token;
+import com.huatech.mall.enums.ApiErrorCodeEnum;
+import com.huatech.mall.response.ResponseResult;
 import org.springframework.stereotype.Component;
 
 /**

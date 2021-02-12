@@ -1,5 +1,6 @@
 package com.huatech.mall.service.impl;
 
+import com.huatech.mall.constants.ApiBaseConstants;
 import com.huatech.mall.dao.UserMapper;
 import com.huatech.mall.dto.LoginUserRes;
 import com.huatech.mall.dto.UserToken;
@@ -9,13 +10,12 @@ import com.huatech.mall.service.IUserService;
 import com.huatech.mall.utils.Md5Utils;
 import com.huatech.mall.vo.LoginParam;
 import com.huatech.mall.vo.UserParam;
-import com.jrx.common.constants.BasicConstants;
-import com.jrx.common.enums.ApiErrorCodeEnum;
-import com.jrx.common.exception.ExceptionCustomer;
-import com.jrx.common.response.ResponseResult;
-import com.jrx.common.utils.JsonUtils;
-import com.jrx.common.utils.RedisUtils;
-import com.jrx.common.utils.Token;
+import com.huatech.mall.enums.ApiErrorCodeEnum;
+import com.huatech.mall.exception.ExceptionCustomer;
+import com.huatech.mall.response.ResponseResult;
+import com.huatech.mall.utils.JsonUtils;
+import com.huatech.mall.utils.RedisUtils;
+import com.huatech.mall.utils.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -58,7 +58,7 @@ public class UserServiceImpl implements IUserService {
         //验证通过生成token，并保存到redis里
         UserToken tokenReq = UserToken.builder().id(user.getId()).nickName(user.getNickname()).userName(user.getUsername()).build();
         ResponseResult<Token> response = authUserFeignService.createToken(JsonUtils.toString(tokenReq));
-        if (response.getCode() != BasicConstants.REMOTE_SUCCESS || response.getData() == null) {
+        if (response.getCode() != ApiBaseConstants.REMOTE_SUCCESS || response.getData() == null) {
             //调用鉴权接口失败
             throw new ExceptionCustomer(ApiErrorCodeEnum.AUTH_REMOTE_FAIL);
         }

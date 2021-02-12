@@ -15,7 +15,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan("com.huatech.mall.mapper")
-@ComponentScan(basePackages = {"com.jrx.common.exception"})
 public class MallProductApplication {
 
     public static void main(String[] args) {

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huatech.mall.mapper.order.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.huatech.mall.entity.order.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="address_id" jdbcType="BIGINT" property="addressId" />
+    <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="pay_type" jdbcType="CHAR" property="payType" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="if_can_invoice" jdbcType="CHAR" property="ifCanInvoice" />
+    <result column="invoice_title" jdbcType="VARCHAR" property="invoiceTitle" />
+    <result column="coupon_price" jdbcType="DOUBLE" property="couponPrice" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="pay_user" jdbcType="VARCHAR" property="payUser" />
+    <result column="pay_id" jdbcType="VARCHAR" property="payId" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="source" jdbcType="CHAR" property="source" />
+    <result column="logistics_company_name" jdbcType="VARCHAR" property="logisticsCompanyName" />
+    <result column="ogistics_bill_no" jdbcType="VARCHAR" property="ogisticsBillNo" />
+    <result column="timing_activity_id" jdbcType="VARCHAR" property="timingActivityId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.huatech.mall.entity.order.Order">
+    <result column="logistics_company_id" jdbcType="LONGVARCHAR" property="logisticsCompanyId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, address_id, coupon_id, order_no, pay_type, price, status, user_id, num, if_can_invoice, 
+    invoice_title, coupon_price, create_user, summary, pay_user, pay_id, pay_time, source, 
+    logistics_company_name, ogistics_bill_no, timing_activity_id, remark, create_time, 
+    update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    logistics_company_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.huatech.mall.entity.order.Order">
+    insert into t_order (id, address_id, coupon_id, 
+      order_no, pay_type, price, 
+      status, user_id, num, if_can_invoice, 
+      invoice_title, coupon_price, create_user, 
+      summary, pay_user, pay_id, 
+      pay_time, source, logistics_company_name, 
+      ogistics_bill_no, timing_activity_id, remark, 
+      create_time, update_time, logistics_company_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{addressId,jdbcType=BIGINT}, #{couponId,jdbcType=BIGINT}, 
+      #{orderNo,jdbcType=VARCHAR}, #{payType,jdbcType=CHAR}, #{price,jdbcType=DOUBLE}, 
+      #{status,jdbcType=CHAR}, #{userId,jdbcType=BIGINT}, #{num,jdbcType=INTEGER}, #{ifCanInvoice,jdbcType=CHAR}, 
+      #{invoiceTitle,jdbcType=VARCHAR}, #{couponPrice,jdbcType=DOUBLE}, #{createUser,jdbcType=BIGINT}, 
+      #{summary,jdbcType=VARCHAR}, #{payUser,jdbcType=VARCHAR}, #{payId,jdbcType=VARCHAR}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{source,jdbcType=CHAR}, #{logisticsCompanyName,jdbcType=VARCHAR}, 
+      #{ogisticsBillNo,jdbcType=VARCHAR}, #{timingActivityId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{logisticsCompanyId,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.huatech.mall.entity.order.Order">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="addressId != null">
+        address_id,
+      </if>
+      <if test="couponId != null">
+        coupon_id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="ifCanInvoice != null">
+        if_can_invoice,
+      </if>
+      <if test="invoiceTitle != null">
+        invoice_title,
+      </if>
+      <if test="couponPrice != null">
+        coupon_price,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="payUser != null">
+        pay_user,
+      </if>
+      <if test="payId != null">
+        pay_id,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="logisticsCompanyName != null">
+        logistics_company_name,
+      </if>
+      <if test="ogisticsBillNo != null">
+        ogistics_bill_no,
+      </if>
+      <if test="timingActivityId != null">
+        timing_activity_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="logisticsCompanyId != null">
+        logistics_company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addressId != null">
+        #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="couponId != null">
+        #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="ifCanInvoice != null">
+        #{ifCanInvoice,jdbcType=CHAR},
+      </if>
+      <if test="invoiceTitle != null">
+        #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="couponPrice != null">
+        #{couponPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="payUser != null">
+        #{payUser,jdbcType=VARCHAR},
+      </if>
+      <if test="payId != null">
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=CHAR},
+      </if>
+      <if test="logisticsCompanyName != null">
+        #{logisticsCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="ogisticsBillNo != null">
+        #{ogisticsBillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="timingActivityId != null">
+        #{timingActivityId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsCompanyId != null">
+        #{logisticsCompanyId,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huatech.mall.entity.order.Order">
+    update t_order
+    <set>
+      <if test="addressId != null">
+        address_id = #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="couponId != null">
+        coupon_id = #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="ifCanInvoice != null">
+        if_can_invoice = #{ifCanInvoice,jdbcType=CHAR},
+      </if>
+      <if test="invoiceTitle != null">
+        invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="couponPrice != null">
+        coupon_price = #{couponPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="payUser != null">
+        pay_user = #{payUser,jdbcType=VARCHAR},
+      </if>
+      <if test="payId != null">
+        pay_id = #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=CHAR},
+      </if>
+      <if test="logisticsCompanyName != null">
+        logistics_company_name = #{logisticsCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="ogisticsBillNo != null">
+        ogistics_bill_no = #{ogisticsBillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="timingActivityId != null">
+        timing_activity_id = #{timingActivityId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsCompanyId != null">
+        logistics_company_id = #{logisticsCompanyId,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.huatech.mall.entity.order.Order">
+    update t_order
+    set address_id = #{addressId,jdbcType=BIGINT},
+      coupon_id = #{couponId,jdbcType=BIGINT},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=CHAR},
+      price = #{price,jdbcType=DOUBLE},
+      status = #{status,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      num = #{num,jdbcType=INTEGER},
+      if_can_invoice = #{ifCanInvoice,jdbcType=CHAR},
+      invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      coupon_price = #{couponPrice,jdbcType=DOUBLE},
+      create_user = #{createUser,jdbcType=BIGINT},
+      summary = #{summary,jdbcType=VARCHAR},
+      pay_user = #{payUser,jdbcType=VARCHAR},
+      pay_id = #{payId,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      source = #{source,jdbcType=CHAR},
+      logistics_company_name = #{logisticsCompanyName,jdbcType=VARCHAR},
+      ogistics_bill_no = #{ogisticsBillNo,jdbcType=VARCHAR},
+      timing_activity_id = #{timingActivityId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      logistics_company_id = #{logisticsCompanyId,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huatech.mall.entity.order.Order">
+    update t_order
+    set address_id = #{addressId,jdbcType=BIGINT},
+      coupon_id = #{couponId,jdbcType=BIGINT},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=CHAR},
+      price = #{price,jdbcType=DOUBLE},
+      status = #{status,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      num = #{num,jdbcType=INTEGER},
+      if_can_invoice = #{ifCanInvoice,jdbcType=CHAR},
+      invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      coupon_price = #{couponPrice,jdbcType=DOUBLE},
+      create_user = #{createUser,jdbcType=BIGINT},
+      summary = #{summary,jdbcType=VARCHAR},
+      pay_user = #{payUser,jdbcType=VARCHAR},
+      pay_id = #{payId,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      source = #{source,jdbcType=CHAR},
+      logistics_company_name = #{logisticsCompanyName,jdbcType=VARCHAR},
+      ogistics_bill_no = #{ogisticsBillNo,jdbcType=VARCHAR},
+      timing_activity_id = #{timingActivityId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

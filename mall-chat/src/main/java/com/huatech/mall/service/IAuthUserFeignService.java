@@ -1,8 +1,8 @@
 package com.huatech.mall.service;
 
 import com.huatech.mall.service.impl.AuthUserFeignServiceFallBack;
-import com.jrx.common.response.ResponseResult;
-import com.jrx.common.utils.Token;
+import com.huatech.mall.response.ResponseResult;
+import com.huatech.mall.utils.Token;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

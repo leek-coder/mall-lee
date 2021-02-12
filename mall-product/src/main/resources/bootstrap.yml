@@ -1,6 +1,8 @@
 spring:
   profiles:
-    active: dev
+    active: prod
+  application:
+    name: mall-product
 #ribbon:    解决Ribbon 第一次调用耗时高的配置
 #  eager-load:
 #    enabled: true     #开启懒加载
@@ -118,3 +120,17 @@ spring:
       sql:
         show: true # 打印 SQL
 
+#正式环境
+---
+spring:
+  profiles: prod
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.95.212.30:8848
+        namespace: fab18c63-f479-4def-b1b8-b753fccfa6d2
+      config:
+        server-addr: 47.95.212.30:8848
+        namespace: fab18c63-f479-4def-b1b8-b753fccfa6d2
+        file-extension: yaml
+        group: DEFAULT_GROUP

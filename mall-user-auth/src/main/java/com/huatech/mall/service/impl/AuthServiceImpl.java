@@ -2,12 +2,12 @@ package com.huatech.mall.service.impl;
 
 import com.huatech.mall.entity.User;
 import com.huatech.mall.service.IAuthService;
-import com.jrx.common.entity.JwtUser;
-import com.jrx.common.enums.ApiErrorCodeEnum;
-import com.jrx.common.exception.ExceptionCustomer;
-import com.jrx.common.utils.JwtUtils;
-import com.jrx.common.utils.RedisUtils;
-import com.jrx.common.utils.Token;
+import com.huatech.mall.entity.JwtUser;
+import com.huatech.mall.enums.ApiErrorCodeEnum;
+import com.huatech.mall.exception.ExceptionCustomer;
+import com.huatech.mall.utils.JwtUtils;
+import com.huatech.mall.utils.RedisUtils;
+import com.huatech.mall.utils.Token;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

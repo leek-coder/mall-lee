@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huatech.mall.mapper.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.huatech.mall.model.Product">
+        <id column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="category_no" jdbcType="VARCHAR" property="categoryNo"/>
+        <result column="product_image" jdbcType="VARCHAR" property="productImage"/>
+        <result column="product_name" jdbcType="VARCHAR" property="productName"/>
+        <result column="product_status" jdbcType="INTEGER" property="productStatus"/>
+        <result column="product_stock" jdbcType="INTEGER" property="productStock"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="product_description" jdbcType="VARCHAR" property="productDescription"/>
+        <result column="product_start_time" jdbcType="TIMESTAMP" property="productStartTime"/>
+        <result column="product_end_time" jdbcType="TIMESTAMP" property="productEndTime"/>
+        <result column="product_sales_type" jdbcType="INTEGER" property="productSalesType"/>
+        <result column="product_if_recommend" jdbcType="INTEGER" property="productIfRecommend"/>
+        <result column="product_now_price" jdbcType="DOUBLE" property="productNowPrice"/>
+        <result column="product_now_price_description" jdbcType="VARCHAR" property="productNowPriceDescription"/>
+        <result column="product_original_price" jdbcType="DOUBLE" property="productOriginalPrice"/>
+        <result column="product_sold_num" jdbcType="INTEGER" property="productSoldNum"/>
+        <result column="product_summary" jdbcType="VARCHAR" property="productSummary"/>
+        <result column="product_if_can_invoice" jdbcType="INTEGER" property="productIfCanInvoice"/>
+        <result column="product_goods_type" jdbcType="INTEGER" property="productGoodsType"/>
+        <result column="product_update_user" jdbcType="VARCHAR" property="productUpdateUser"/>
+        <result column="product_create_user" jdbcType="VARCHAR" property="productCreateUser"/>
+        <result column="product_commend_start_time" jdbcType="TIMESTAMP" property="productCommendStartTime"/>
+        <result column="product_commend_end_time" jdbcType="TIMESTAMP" property="productCommendEndTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    product_id, category_no, product_image, product_name, product_status, product_stock, 
+    create_time, product_description, product_start_time, product_end_time, product_sales_type, 
+    product_if_recommend, product_now_price, product_now_price_description, product_original_price, 
+    product_sold_num, product_summary, product_if_can_invoice, product_goods_type, product_update_user, 
+    product_create_user, product_commend_start_time, product_commend_end_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_product
+        where product_id = #{productId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_product
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.huatech.mall.model.Product">
+    insert into t_product (product_id, category_no, product_image, 
+      product_name, product_status, product_stock, 
+      create_time, product_description, product_start_time, 
+      product_end_time, product_sales_type, product_if_recommend, 
+      product_now_price, product_now_price_description, 
+      product_original_price, product_sold_num, product_summary, 
+      product_if_can_invoice, product_goods_type, 
+      product_update_user, product_create_user, product_commend_start_time, 
+      product_commend_end_time, update_time)
+    values (#{productId,jdbcType=VARCHAR}, #{categoryNo,jdbcType=VARCHAR}, #{productImage,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{productStatus,jdbcType=INTEGER}, #{productStock,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{productDescription,jdbcType=VARCHAR}, #{productStartTime,jdbcType=TIMESTAMP}, 
+      #{productEndTime,jdbcType=TIMESTAMP}, #{productSalesType,jdbcType=INTEGER}, #{productIfRecommend,jdbcType=INTEGER}, 
+      #{productNowPrice,jdbcType=DOUBLE}, #{productNowPriceDescription,jdbcType=VARCHAR}, 
+      #{productOriginalPrice,jdbcType=DOUBLE}, #{productSoldNum,jdbcType=INTEGER}, #{productSummary,jdbcType=VARCHAR}, 
+      #{productIfCanInvoice,jdbcType=INTEGER}, #{productGoodsType,jdbcType=INTEGER}, 
+      #{productUpdateUser,jdbcType=VARCHAR}, #{productCreateUser,jdbcType=VARCHAR}, #{productCommendStartTime,jdbcType=TIMESTAMP}, 
+      #{productCommendEndTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.huatech.mall.model.Product">
+        insert into t_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="categoryNo != null">
+                category_no,
+            </if>
+            <if test="productImage != null">
+                product_image,
+            </if>
+            <if test="productName != null">
+                product_name,
+            </if>
+            <if test="productStatus != null">
+                product_status,
+            </if>
+            <if test="productStock != null">
+                product_stock,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="productDescription != null">
+                product_description,
+            </if>
+            <if test="productStartTime != null">
+                product_start_time,
+            </if>
+            <if test="productEndTime != null">
+                product_end_time,
+            </if>
+            <if test="productSalesType != null">
+                product_sales_type,
+            </if>
+            <if test="productIfRecommend != null">
+                product_if_recommend,
+            </if>
+            <if test="productNowPrice != null">
+                product_now_price,
+            </if>
+            <if test="productNowPriceDescription != null">
+                product_now_price_description,
+            </if>
+            <if test="productOriginalPrice != null">
+                product_original_price,
+            </if>
+            <if test="productSoldNum != null">
+                product_sold_num,
+            </if>
+            <if test="productSummary != null">
+                product_summary,
+            </if>
+            <if test="productIfCanInvoice != null">
+                product_if_can_invoice,
+            </if>
+            <if test="productGoodsType != null">
+                product_goods_type,
+            </if>
+            <if test="productUpdateUser != null">
+                product_update_user,
+            </if>
+            <if test="productCreateUser != null">
+                product_create_user,
+            </if>
+            <if test="productCommendStartTime != null">
+                product_commend_start_time,
+            </if>
+            <if test="productCommendEndTime != null">
+                product_commend_end_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryNo != null">
+                #{categoryNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productImage != null">
+                #{productImage,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productStatus != null">
+                #{productStatus,jdbcType=INTEGER},
+            </if>
+            <if test="productStock != null">
+                #{productStock,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="productDescription != null">
+                #{productDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="productStartTime != null">
+                #{productStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="productEndTime != null">
+                #{productEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="productSalesType != null">
+                #{productSalesType,jdbcType=INTEGER},
+            </if>
+            <if test="productIfRecommend != null">
+                #{productIfRecommend,jdbcType=INTEGER},
+            </if>
+            <if test="productNowPrice != null">
+                #{productNowPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="productNowPriceDescription != null">
+                #{productNowPriceDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="productOriginalPrice != null">
+                #{productOriginalPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="productSoldNum != null">
+                #{productSoldNum,jdbcType=INTEGER},
+            </if>
+            <if test="productSummary != null">
+                #{productSummary,jdbcType=VARCHAR},
+            </if>
+            <if test="productIfCanInvoice != null">
+                #{productIfCanInvoice,jdbcType=INTEGER},
+            </if>
+            <if test="productGoodsType != null">
+                #{productGoodsType,jdbcType=INTEGER},
+            </if>
+            <if test="productUpdateUser != null">
+                #{productUpdateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="productCreateUser != null">
+                #{productCreateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="productCommendStartTime != null">
+                #{productCommendStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="productCommendEndTime != null">
+                #{productCommendEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.huatech.mall.model.Product">
+    update t_product
+    set category_no = #{categoryNo,jdbcType=VARCHAR},
+      product_image = #{productImage,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_status = #{productStatus,jdbcType=INTEGER},
+      product_stock = #{productStock,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      product_description = #{productDescription,jdbcType=VARCHAR},
+      product_start_time = #{productStartTime,jdbcType=TIMESTAMP},
+      product_end_time = #{productEndTime,jdbcType=TIMESTAMP},
+      product_sales_type = #{productSalesType,jdbcType=INTEGER},
+      product_if_recommend = #{productIfRecommend,jdbcType=INTEGER},
+      product_now_price = #{productNowPrice,jdbcType=DOUBLE},
+      product_now_price_description = #{productNowPriceDescription,jdbcType=VARCHAR},
+      product_original_price = #{productOriginalPrice,jdbcType=DOUBLE},
+      product_sold_num = #{productSoldNum,jdbcType=INTEGER},
+      product_summary = #{productSummary,jdbcType=VARCHAR},
+      product_if_can_invoice = #{productIfCanInvoice,jdbcType=INTEGER},
+      product_goods_type = #{productGoodsType,jdbcType=INTEGER},
+      product_update_user = #{productUpdateUser,jdbcType=VARCHAR},
+      product_create_user = #{productCreateUser,jdbcType=VARCHAR},
+      product_commend_start_time = #{productCommendStartTime,jdbcType=TIMESTAMP},
+      product_commend_end_time = #{productCommendEndTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </update>
+
+    <select id="findProductList"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_product
+        where product_status = 1;
+    </select>
+</mapper>

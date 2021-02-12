@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.huatech.mall.model.Book;
 import com.huatech.mall.service.ReIndexService;
 import com.huatech.mall.service.ReadBookService;
-import com.jrx.common.response.ResponseResult;
+import com.huatech.mall.response.ResponseResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

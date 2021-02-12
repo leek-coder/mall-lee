@@ -2,8 +2,8 @@ package com.huatech.mall.service;
 
 
 import com.huatech.mall.entity.User;
-import com.jrx.common.entity.JwtUser;
-import com.jrx.common.utils.Token;
+import com.huatech.mall.entity.JwtUser;
+import com.huatech.mall.utils.Token;
 
 /**
  * @ClassName IJwtAuthService

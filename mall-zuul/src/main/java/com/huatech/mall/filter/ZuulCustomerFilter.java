@@ -1,17 +1,15 @@
 package com.huatech.mall.filter;
 
 import com.huatech.mall.feign.IUserAuthFeignService;
-import com.jrx.common.entity.JwtUser;
-import com.jrx.common.response.ResponseResult;
-import com.jrx.common.utils.JsonUtils;
+import com.huatech.mall.entity.JwtUser;
+import com.huatech.mall.response.ResponseResult;
+import com.huatech.mall.utils.JsonUtils;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

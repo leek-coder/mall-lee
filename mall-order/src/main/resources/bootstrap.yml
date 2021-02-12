@@ -1,0 +1,56 @@
+spring:
+  #配置应用名称
+  application:
+    name: mall-order
+  #本地环境
+  profiles:
+    active: prod
+# 日志位置
+logging:
+  #配置sql打印
+  level:
+    com.huatech.mall.mapper.*: debug
+
+---
+spring:
+  profiles: local
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.95.212.30:8848
+        namespace: 2c3df88b-3052-4106-ab0d-a03f413e8093
+      config:
+        server-addr: 47.95.212.30:8848
+        namespace: 2c3df88b-3052-4106-ab0d-a03f413e8093
+        file-extension: yaml
+        group: DEFAULT_GROUP
+
+#开发环境
+---
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.95.212.30:8848
+        namespace: 66dc8909-8503-4fed-bedd-fefa41b36747
+      config:
+        server-addr: 47.95.212.30:8848
+        namespace: 66dc8909-8503-4fed-bedd-fefa41b36747
+        file-extension: yaml
+        group: DEFAULT_GROUP
+
+#开发环境
+---
+spring:
+  profiles: prod
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.95.212.30:8848
+        namespace: fab18c63-f479-4def-b1b8-b753fccfa6d2
+      config:
+        server-addr: 47.95.212.30:8848
+        namespace: fab18c63-f479-4def-b1b8-b753fccfa6d2
+        file-extension: yaml
+        group: DEFAULT_GROUP

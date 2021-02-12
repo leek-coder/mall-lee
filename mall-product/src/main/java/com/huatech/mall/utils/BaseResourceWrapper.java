@@ -2,7 +2,7 @@ package com.huatech.mall.utils;
 
 import com.huatech.mall.model.UcsSubscription;
 import com.huatech.mall.pojo.vo.*;
-import com.jrx.common.exception.ThrowCustomerException;
+import com.huatech.mall.exception.ThrowCustomerException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;

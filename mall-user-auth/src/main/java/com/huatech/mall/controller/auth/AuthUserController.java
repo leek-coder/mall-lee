@@ -2,9 +2,9 @@ package com.huatech.mall.controller.auth;
 
 import com.huatech.mall.entity.User;
 import com.huatech.mall.service.IAuthService;
-import com.jrx.common.entity.JwtUser;
-import com.jrx.common.response.ResponseResult;
-import com.jrx.common.utils.Token;
+import com.huatech.mall.entity.JwtUser;
+import com.huatech.mall.response.ResponseResult;
+import com.huatech.mall.utils.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

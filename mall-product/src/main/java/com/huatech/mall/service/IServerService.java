@@ -2,7 +2,7 @@ package com.huatech.mall.service;
 
 
 import com.huatech.mall.pojo.vo.ServerVO;
-import com.jrx.common.response.ResponseResult;
+import com.huatech.mall.response.ResponseResult;
 
 /**
  * @author:leek

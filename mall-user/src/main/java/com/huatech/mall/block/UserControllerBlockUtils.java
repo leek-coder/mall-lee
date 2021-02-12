@@ -2,7 +2,7 @@ package com.huatech.mall.block;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
-import com.jrx.common.exception.ExceptionCustomer;
+import com.huatech.mall.exception.ExceptionCustomer;
 import org.springframework.stereotype.Component;
 
 /**

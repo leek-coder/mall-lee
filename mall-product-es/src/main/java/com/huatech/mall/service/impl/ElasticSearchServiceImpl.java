@@ -1,9 +1,9 @@
 package com.huatech.mall.service.impl;
 
+import com.huatech.mall.constants.ApiBaseConstants;
 import com.huatech.mall.service.ElasticService;
-import com.jrx.common.constants.BasicConstants;
-import com.jrx.common.enums.ApiErrorCodeEnum;
-import com.jrx.common.exception.ThrowCustomerException;
+import com.huatech.mall.enums.ApiErrorCodeEnum;
+import com.huatech.mall.exception.ThrowCustomerException;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -42,7 +42,7 @@ public class ElasticSearchServiceImpl implements ElasticService {
     public Boolean addBulkIn(BulkRequest bulkRequest) {
         try {
             BulkResponse bulkResponse = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
-            if (bulkResponse.status().getStatus() == BasicConstants.BUILD_INDEX_SUCCESS) {
+            if (bulkResponse.status().getStatus() == ApiBaseConstants.BUILD_INDEX_SUCCESS) {
                 return true;
             }
         } catch (IOException e) {

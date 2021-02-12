@@ -1,6 +1,6 @@
 package com.huatech.mall.controller;
 
-import com.jrx.common.response.ResponseResult;
+import com.huatech.mall.response.ResponseResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

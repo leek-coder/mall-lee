@@ -1,6 +1,6 @@
 package com.huatech.mall.feign;
 
-import com.jrx.common.response.ResponseResult;
+import com.huatech.mall.response.ResponseResult;
 import org.springframework.stereotype.Component;
 
 /**

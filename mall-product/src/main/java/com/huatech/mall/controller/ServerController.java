@@ -5,7 +5,7 @@ import com.huatech.mall.model.UcsSubscription;
 import com.huatech.mall.pojo.vo.ServerVO;
 import com.huatech.mall.service.IServerService;
 import com.huatech.mall.service.IUcsSubscriptionService;
-import com.jrx.common.response.ResponseResult;
+import com.huatech.mall.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

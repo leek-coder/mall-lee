@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huatech.mall.mapper.order.SubOrderMapper">
+  <resultMap id="BaseResultMap" type="com.huatech.mall.entity.order.SubOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="product_num" jdbcType="INTEGER" property="productNum" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="refund_id" jdbcType="BIGINT" property="refundId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
+    <result column="coupon_price" jdbcType="DOUBLE" property="couponPrice" />
+    <result column="source" jdbcType="CHAR" property="source" />
+    <result column="product_image" jdbcType="VARCHAR" property="productImage" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_no, product_id, product_num, status, price, refund_id, user_id, coupon_id, 
+    coupon_price, source, product_image, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sub_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_sub_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.huatech.mall.entity.order.SubOrder">
+    insert into t_sub_order (id, order_no, product_id, 
+      product_num, status, price, 
+      refund_id, user_id, coupon_id, 
+      coupon_price, source, product_image, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{productNum,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, #{price,jdbcType=DOUBLE}, 
+      #{refundId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{couponId,jdbcType=BIGINT}, 
+      #{couponPrice,jdbcType=DOUBLE}, #{source,jdbcType=CHAR}, #{productImage,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huatech.mall.entity.order.SubOrder">
+    insert into t_sub_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productNum != null">
+        product_num,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="refundId != null">
+        refund_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="couponId != null">
+        coupon_id,
+      </if>
+      <if test="couponPrice != null">
+        coupon_price,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="productImage != null">
+        product_image,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productNum != null">
+        #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="refundId != null">
+        #{refundId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="couponId != null">
+        #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="couponPrice != null">
+        #{couponPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=CHAR},
+      </if>
+      <if test="productImage != null">
+        #{productImage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huatech.mall.entity.order.SubOrder">
+    update t_sub_order
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productNum != null">
+        product_num = #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="refundId != null">
+        refund_id = #{refundId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="couponId != null">
+        coupon_id = #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="couponPrice != null">
+        coupon_price = #{couponPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=CHAR},
+      </if>
+      <if test="productImage != null">
+        product_image = #{productImage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huatech.mall.entity.order.SubOrder">
+    update t_sub_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      product_num = #{productNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      price = #{price,jdbcType=DOUBLE},
+      refund_id = #{refundId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      coupon_id = #{couponId,jdbcType=BIGINT},
+      coupon_price = #{couponPrice,jdbcType=DOUBLE},
+      source = #{source,jdbcType=CHAR},
+      product_image = #{productImage,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
