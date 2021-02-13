@@ -47,9 +47,8 @@ public class ProductServiceImpl implements IProductService {
         Product product = null;
 
         String productCacheKey = ApiBaseConstants.RedisKeyPrefix.PRODUCT_STOCK + "_" + productId;
-        //从一级缓存里取
+        //一级缓存里取
         product = localCache.get(productCacheKey);
-        //一级缓存
         if (product != null) {
             return product;
         }
@@ -59,7 +58,7 @@ public class ProductServiceImpl implements IProductService {
             localCache.setLocalCache(productCacheKey, product);
             return product;
         }
-        if (zkLock.lock(lockPath + "_" + productId)) {
+        if (zkLock.lock(lockPath + productId)) {
             product = productMapper.selectByPrimaryKey(productId);
             if (product == null) {
                 return null;
@@ -68,7 +67,7 @@ public class ProductServiceImpl implements IProductService {
             redisUtils.setEx(productCacheKey, JsonUtils.toString(product), 3600, TimeUnit.SECONDS);
             //缓存到一级缓存
             localCache.setLocalCache(productCacheKey, product);
-            zkLock.unlock(lockPath + "_" + productId);
+            zkLock.unlock(lockPath + productId);
         } else {
             product = JsonUtils.toObjectBean(redisUtils.get(productCacheKey), Product.class);
             if (product != null) {
@@ -81,6 +80,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<Product> findProductList() {
         return productMapper.findProductList();
+    }
+
+    @Override
+    public List<String> queryProductIds() {
+        return productMapper.queryProductIds();
     }
 
 

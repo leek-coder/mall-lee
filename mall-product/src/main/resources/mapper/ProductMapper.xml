@@ -50,4 +50,12 @@
         from t_product
         where product_status = 1;
     </select>
+
+    <select id="queryProductIds"
+            resultType="java.lang.String">
+        select
+            product_id
+        from t_product
+
+    </select>
 </mapper>

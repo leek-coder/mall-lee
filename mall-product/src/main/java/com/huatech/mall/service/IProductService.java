@@ -27,4 +27,10 @@ public interface IProductService {
      * @return
      */
     List<Product> findProductList();
+
+    /**
+     * 查询所有商品的标示
+     * @return
+     */
+    List<String> queryProductIds();
 }

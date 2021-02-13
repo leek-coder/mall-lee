@@ -58,7 +58,8 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
                     if(!concurrentMap.containsKey(path)){
                         concurrentMap.put(path,new CountDownLatch(1));
                     }
-                } finally {
+                }
+                finally {
                     reentrantLock.unlock();
                 }
             }

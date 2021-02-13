@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * @author like
+ * @date 2020-06-22 3:09 下午
+ **/
 @Slf4j
 @Component
 public class LocalCache {

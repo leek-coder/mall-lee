@@ -24,4 +24,9 @@ public interface ProductMapper {
      */
     Product selectByPrimaryKey(String productId);
 
+    /**
+     * 查询所有商品的标示
+     * @return
+     */
+    List<String> queryProductIds();
 }
