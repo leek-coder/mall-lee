@@ -19,12 +19,12 @@ import java.util.List;
  * @date 2020-06-22 3:09 下午
  **/
 @RestController
-@RequestMapping(value = "/api/product")
+@RequestMapping(value = "/v1/pms")
 @Slf4j
 public class ProductController {
 
     @Autowired
-    private IProductService productFeignService;
+    private IProductService productService;
 
 
 
@@ -34,10 +34,10 @@ public class ProductController {
      * @param productId
      * @return
      */
-    @GetMapping(value = "/store/{productId}")
+    @GetMapping(value = "/productInfo/{productId}")
     public ResponseResult<Product> product(@PathVariable("productId") String productId) {
         log.info("======远程服务调用商品接口=====");
-        Product product = productFeignService.findProductStore(productId);
+        Product product = productService.findProductStore(productId);
         return ResponseResult.success(product);
     }
 
@@ -46,9 +46,9 @@ public class ProductController {
      *
      * @return
      */
-    @RequestMapping(value = "/list")
+    @GetMapping(value = "/products")
     public ResponseResult<List<Product>> list() {
-        List<Product> products =productFeignService.findProductList();
+        List<Product> products =productService.findProductList();
         return ResponseResult.success(products);
     }
 

@@ -134,3 +134,11 @@ spring:
         namespace: fab18c63-f479-4def-b1b8-b753fccfa6d2
         file-extension: yaml
         group: DEFAULT_GROUP
+#zk配置
+zk:
+  curator:
+    retryCount: 5 #重试次数
+    elapsedTimeMs: 5000 #
+    connectUrl: localhost:2181 #zk地址
+    sessionTimeOutMs: 60000 #会话超时时间
+    connectionTimeOutMs: 5000 #连接超时时间

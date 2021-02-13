@@ -1,4 +1,4 @@
-package com.huatech.mall.model;
+package com.huatech.mall.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,80 +6,91 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
 /**
- * @author like
- * @date 2019-12-03
+ *  
+ * 表:t_user 
+ * @author like 
+ * @date 2019-12-03 
  */
 public class User {
     /**
+     * 
      * 表字段:id
      */
     private Long id;
 
-    private Long userId;
-
     /**
+     * 
      * 表字段:user_name
      */
     private String userName;
 
     /**
+     * 
      * 表字段:nick_name
      */
     private String nickName;
 
     /**
+     * 
      * 表字段:sex
      */
     private Integer sex;
 
 
     /**
+     * 
      * 表字段:telephone
      */
     private String telephone;
 
 
     /**
+     * 
      * 表字段:password
      */
     @JsonIgnore
     private String password;
 
     /**
+     * 
      * 表字段:delete_status
      */
     private Integer deleteStatus;
 
     /**
+     * 
      * 表字段:email
      */
     private String email;
 
     /**
+     * 
      * 表字段:locked
      */
     private Integer locked;
 
     /**
+     * 
      * 表字段:description
      */
     private String description;
 
     /**
+     * 
      * 表字段:create_time
      */
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date createTime;
 
     /**
+     * 
      * 表字段:update_time
      */
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date updateTime;
 
     /**
      * 获取
-     *
      * @return id Long
      */
     public Long getId() {
@@ -88,8 +99,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param id
+     * @param id 
      */
     public void setId(Long id) {
         this.id = id;
@@ -97,7 +107,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return userName String
      */
     public String getUserName() {
@@ -106,8 +115,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param userName
+     * @param userName 
      */
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
@@ -115,7 +123,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return nickName String
      */
     public String getNickName() {
@@ -124,8 +131,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param nickName
+     * @param nickName 
      */
     public void setNickName(String nickName) {
         this.nickName = nickName == null ? null : nickName.trim();
@@ -133,7 +139,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return sex Integer
      */
     public Integer getSex() {
@@ -142,17 +147,18 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param sex
+     * @param sex 
      */
     public void setSex(Integer sex) {
         this.sex = sex;
     }
 
 
+
+
+
     /**
      * 获取
-     *
      * @return telephone String
      */
     public String getTelephone() {
@@ -161,8 +167,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param telephone
+     * @param telephone 
      */
     public void setTelephone(String telephone) {
         this.telephone = telephone == null ? null : telephone.trim();
@@ -171,7 +176,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return password String
      */
     public String getPassword() {
@@ -180,8 +184,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param password
+     * @param password 
      */
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
@@ -189,7 +192,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return deleteStatus Integer
      */
     public Integer getDeleteStatus() {
@@ -198,8 +200,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param deleteStatus
+     * @param deleteStatus 
      */
     public void setDeleteStatus(Integer deleteStatus) {
         this.deleteStatus = deleteStatus;
@@ -207,7 +208,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return email String
      */
     public String getEmail() {
@@ -216,8 +216,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param email
+     * @param email 
      */
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
@@ -225,7 +224,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return locked Integer
      */
     public Integer getLocked() {
@@ -234,8 +232,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param locked
+     * @param locked 
      */
     public void setLocked(Integer locked) {
         this.locked = locked;
@@ -243,7 +240,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return description String
      */
     public String getDescription() {
@@ -252,8 +248,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param description
+     * @param description 
      */
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
@@ -261,7 +256,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return createTime Date
      */
     public Date getCreateTime() {
@@ -270,8 +264,7 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param createTime
+     * @param createTime 
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
@@ -279,7 +272,6 @@ public class User {
 
     /**
      * 获取
-     *
      * @return updateTime Date
      */
     public Date getUpdateTime() {
@@ -288,19 +280,10 @@ public class User {
 
     /**
      * 设置
-     *
-     * @param updateTime
+     * @param updateTime 
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     @Override
