@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ import java.util.List;
  * @date 2020-06-22 11:54 下午
  **/
 @RestController
-@RequestMapping(value = "/api/mall/order")
+@RequestMapping(value = "/v1/order")
 @Slf4j
 public class OrderController extends BaseController implements InitializingBean {
 
@@ -35,7 +36,7 @@ public class OrderController extends BaseController implements InitializingBean 
     @Autowired
     private IOrderService orderService;
 
-    @Autowired
+    @Resource
     private IProductFeignService productFeignService;
 
     @Autowired
@@ -43,7 +44,7 @@ public class OrderController extends BaseController implements InitializingBean 
 
 
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/generateOrder")
     public ResponseResult createOrder(@RequestBody QuickOrderReq quickOrderReq) {
         Order order = orderService.quickCreateOrder(quickOrderReq);
         //返回下单成功
@@ -67,7 +68,7 @@ public class OrderController extends BaseController implements InitializingBean 
         if (CollectionUtils.isNotEmpty(res)) {
             res.stream().forEach(e -> {
                 //redis的key为前缀+productId，value为库存数量
-                redisUtils.set(ApiBaseConstants.RedisKeyPrefix.PRODUCT_STOCK + "_" + e.getProductId(), e.getProductStock() + "");
+                redisUtils.set(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + "_" + e.getProductId(), e.getProductStock() + "");
             });
         }
 

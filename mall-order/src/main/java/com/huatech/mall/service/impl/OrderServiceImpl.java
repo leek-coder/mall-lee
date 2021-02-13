@@ -1,5 +1,6 @@
 package com.huatech.mall.service.impl;
 
+import com.huatech.mall.component.LocalCache;
 import com.huatech.mall.constants.ApiBaseConstants;
 import com.huatech.mall.entity.DisTransMessage;
 import com.huatech.mall.entity.order.Order;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,15 +41,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class OrderServiceImpl implements IOrderService {
 
 
-    @Autowired
+    @Resource
     private OrderMapper orderMapper;
-    @Autowired
+
+    @Resource
     private IUserFeignService userFeignService;
 
-    @Autowired
+    @Resource
     private IProductFeignService productFeignService;
 
-    @Autowired
+    @Resource
     private IProductStoreFeignService productStoreFeignService;
 
     @Autowired
@@ -63,13 +66,12 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private ISubOrderService subOrderService;
 
-    @Autowired
+    @Resource
     private IPaymentFeignService paymentFeignService;
 
-    /**
-     * 用户标记商品是否已经售完
-     */
-    private ConcurrentHashMap<String, Boolean> productMap = new ConcurrentHashMap();
+    @Autowired
+    private LocalCache<Boolean> localCache;
+
 
     @Override
     public Order quickCreateOrder(QuickOrderReq quickOrderReq) {
@@ -77,19 +79,17 @@ public class OrderServiceImpl implements IOrderService {
         if (StringUtils.isBlank(quickOrderReq.getProductId())) {
             throw new ExceptionCustomer(ApiErrorCodeEnum.PRODUCT_ID_NOT_NULL);
         }
-
 //        if (StringUtils.isNotBlank(redisUtils.get(ApiBaseConstants.RedisKeyPrefix.USER_HAD_ORDER_PRODUCT + quickOrderReq.getUserId()))) {
 //            throw new ExceptionCustomer("该用户已经抢够过商品", -1);
 //        }
         //0：从内存里取出商品有无库存标记
-        if (productMap.get(quickOrderReq.getProductId()) != null) {
+        if (confirmCheck(quickOrderReq.getProductId())) {
             throw new ExceptionCustomer("商品已经抢完", -1);
         }
         //先从redis取用户是否存入默认的收货地址
         AddressRes addressRes;
         String addressString = redisUtils.get(ApiBaseConstants.USER_DEFAULT_ADDRESS + quickOrderReq.getUserId());
-        //1:先查询用户是否有默认地址
-        //将用户的默认地址加到缓存
+        //1:先查询用户是否有默认地址 将用户的默认地址加到缓存
         if (StringUtils.isBlank(addressString)) {
             UserDefaultAddressReq defaultAddress = new UserDefaultAddressReq();
             defaultAddress.setUserId("3");
@@ -106,26 +106,48 @@ public class OrderServiceImpl implements IOrderService {
         if (!preSubtractionOfProductStock(quickOrderReq.getProductId())) {
             throw new ExceptionCustomer("商品已经抢完", -1);
         }
-
         //2：商品是否存在
         FeignPredicate<ProductRes> productResFeignPredicate = () -> productFeignService.findProductStore(quickOrderReq.getProductId());
         if (null == productResFeignPredicate.getRes(productResFeignPredicate)) {
             throw new ExceptionCustomer("商品不存在", ApiBaseConstants.REMOTE_FAIL);
         }
         ProductRes productRes = productResFeignPredicate.getRes(productResFeignPredicate);
-
-        //3：校验一下秒杀的时间  暂时不做  后期优化
-
-        //4：判断库存是否足够
+        //3：判断库存是否足够
         if (productRes.getProductStock() <= 0) {
             //库存不足
             throw new ExceptionCustomer("商品库存不足", ApiBaseConstants.REMOTE_FAIL);
         }
-        //5:组装订单调用交易服务，库存服务
+        //4:组装订单调用交易服务，库存服务
         Order order = confirmOrder(productRes, addressRes, quickOrderReq.getUserId());
         return order;
     }
 
+    /**
+     * 检查是否有库存
+     *
+     * @param productId
+     * @return
+     */
+    private boolean confirmCheck(String productId) {
+        Boolean flag = localCache.getCache(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productId);
+        if (flag != null && flag) {
+            return true;
+        }
+        //从redis缓存当中取出当前要购买的商品库存
+        Integer stock = Integer.parseInt(redisUtils.get(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productId));
+        if (stock == null || stock <= 0) {
+            localCache.setLocalCache(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productId, true);
+            return true;
+        }
+        return false;
+    }
+
+    //还原库存
+    public void incrRedisStock(Long productId) {
+        if (redisUtils.hasKey(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productId)) {
+            redisUtils.incrBy(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productId, 1L);
+        }
+    }
 
     /**
      * 下订单   下单的时候做异步化  使用rabbitmq
@@ -139,27 +161,34 @@ public class OrderServiceImpl implements IOrderService {
 
         //创建订单信息
         Order order = createOrder(productRes, addressRes, userId);
-
         //给中台系统发送预订单mq消息
-
         DisTransMessage disTransMessage = new DisTransMessage(order.getOrderNo(), null, "1", 1);
         ResponseResult<Integer> response = paymentFeignService.receiveMessage(JsonUtils.toString(disTransMessage));
         if (null == response || response.getCode() == -1) {
             log.info("发送预订单信息失败");
             //还原缓存里的库存
-            redisUtils.incrBy(ApiBaseConstants.RedisKeyPrefix.PRODUCT_STOCK + "_" + productRes.getProductId(), 1L);
-            productMap.remove(productRes.getProductId());
+            incrRedisStock(Long.parseLong(productRes.getProductId()));
+            //清除掉本地localCache已经售完的标记
+            localCache.remove(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX+productRes.getProductId());
+            //通知服务群,清除本地售罄标记缓存
+            if(shouldPublishCleanMsg(productRes.getProductId())){
+                redisUtils.publish("cleanLocalCache",productRes.getProductId());
+            }
             throw new ExceptionCustomer("发送预订单信息失败", -1);
         }
-
         //异步下单
         try {
             sendService.asynOrder(order);
         } catch (Exception e) {
             log.info("创建订单失败");
             //还原缓存里的库存
-            redisUtils.incrBy(ApiBaseConstants.RedisKeyPrefix.PRODUCT_STOCK + "_" + productRes.getProductId(), 1L);
-            productMap.remove(productRes.getProductId());
+            incrRedisStock(Long.parseLong(productRes.getProductId()));
+            //清除掉本地localCache已经售完的标记
+            localCache.remove(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX+productRes.getProductId());
+            //通知服务群,清除本地售罄标记缓存
+            if(shouldPublishCleanMsg(productRes.getProductId())){
+                redisUtils.publish("cleanLocalCache",productRes.getProductId());
+            }
             throw new ExceptionCustomer("创建订单失败", -1);
         }
 //        //减库存
@@ -208,12 +237,21 @@ public class OrderServiceImpl implements IOrderService {
 
         Long stock = redisUtils.decrBy(ApiBaseConstants.RedisKeyPrefix.PRODUCT_STOCK + "_" + productId);
         if (stock == null || stock < 0) {
-            productMap.put(productId, true);
+            incrRedisStock(Long.parseLong(productId));
             return false;
         }
         return true;
     }
 
+    /**
+     * 判断是否需要通知服务群,清除本地售罄标记缓存
+     * @param productId
+     * @return
+     */
+    public boolean shouldPublishCleanMsg(String productId){
+        Integer stock = Integer.parseInt(redisUtils.get(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productId));
+        return (stock == null || stock <= 0);
+    }
 
     /**
      * 提交订单

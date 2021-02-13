@@ -23,7 +23,7 @@ public interface IProductFeignService {
      * @param productId
      * @return
      */
-    @GetMapping(value = "api/product/store/{productId}")
+    @GetMapping(value = "/v1/pms/productInfo/{productId}")
     ResponseResult<ProductRes> findProductStore(@PathVariable("productId") String productId);
 
 
@@ -32,7 +32,7 @@ public interface IProductFeignService {
      *
      * @return
      */
-    @RequestMapping(value = "api/product/list")
+    @RequestMapping(value = "/v1/pms/products")
     ResponseResult<List<ProductRes>> list();
 
 }
