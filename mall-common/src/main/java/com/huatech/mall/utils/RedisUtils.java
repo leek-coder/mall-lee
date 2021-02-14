@@ -1333,4 +1333,13 @@ public class RedisUtils {
     public Cursor<ZSetOperations.TypedTuple<String>> zScan(String key, ScanOptions options) {
         return redisTemplate.opsForZSet().scan(key, options);
     }
+
+    /**
+     * 发布channel信息
+     * @param channel
+     * @param message
+     */
+    public void publish(String channel,Object message){
+        redisTemplate.convertAndSend(channel,message);
+    }
 }

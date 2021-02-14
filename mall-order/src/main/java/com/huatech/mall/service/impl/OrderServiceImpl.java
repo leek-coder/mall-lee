@@ -83,7 +83,7 @@ public class OrderServiceImpl implements IOrderService {
 //            throw new ExceptionCustomer("该用户已经抢够过商品", -1);
 //        }
         //0：从内存里取出商品有无库存标记
-        if (confirmCheck(quickOrderReq.getProductId())) {
+        if (confirmCheck(quickOrderReq.getProductId(), quickOrderReq.getToken())) {
             throw new ExceptionCustomer("商品已经抢完", -1);
         }
         //先从redis取用户是否存入默认的收货地址
@@ -128,7 +128,14 @@ public class OrderServiceImpl implements IOrderService {
      * @param productId
      * @return
      */
-    private boolean confirmCheck(String productId) {
+    private boolean confirmCheck(String productId, String token) {
+
+        //校验token  这段代码userId 需要更改
+        String redisToken = redisUtils.get(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_TOKEN_PREFIX + "userId" + ":" + productId);
+        if (org.springframework.util.StringUtils.isEmpty(redisToken) || !redisToken.equals(token)) {
+            throw new ExceptionCustomer("非法token");
+        }
+
         Boolean flag = localCache.getCache(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productId);
         if (flag != null && flag) {
             return true;
@@ -162,20 +169,20 @@ public class OrderServiceImpl implements IOrderService {
         //创建订单信息
         Order order = createOrder(productRes, addressRes, userId);
         //给中台系统发送预订单mq消息
-        DisTransMessage disTransMessage = new DisTransMessage(order.getOrderNo(), null, "1", 1);
-        ResponseResult<Integer> response = paymentFeignService.receiveMessage(JsonUtils.toString(disTransMessage));
-        if (null == response || response.getCode() == -1) {
-            log.info("发送预订单信息失败");
-            //还原缓存里的库存
-            incrRedisStock(Long.parseLong(productRes.getProductId()));
-            //清除掉本地localCache已经售完的标记
-            localCache.remove(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX+productRes.getProductId());
-            //通知服务群,清除本地售罄标记缓存
-            if(shouldPublishCleanMsg(productRes.getProductId())){
-                redisUtils.publish("cleanLocalCache",productRes.getProductId());
-            }
-            throw new ExceptionCustomer("发送预订单信息失败", -1);
-        }
+//        DisTransMessage disTransMessage = new DisTransMessage(order.getOrderNo(), null, "1", 1);
+//        ResponseResult<Integer> response = paymentFeignService.receiveMessage(JsonUtils.toString(disTransMessage));
+//        if (null == response || response.getCode() == -1) {
+//            log.info("发送预订单信息失败");
+//            //还原缓存里的库存
+//            incrRedisStock(Long.parseLong(productRes.getProductId()));
+//            //清除掉本地localCache已经售完的标记
+//            localCache.remove(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX+productRes.getProductId());
+//            //通知服务群,清除本地售罄标记缓存
+//            if(shouldPublishCleanMsg(productRes.getProductId())){
+//                redisUtils.publish("cleanLocalCache",productRes.getProductId());
+//            }
+//            throw new ExceptionCustomer("发送预订单信息失败", -1);
+//        }
         //异步下单
         try {
             sendService.asynOrder(order);
@@ -184,10 +191,10 @@ public class OrderServiceImpl implements IOrderService {
             //还原缓存里的库存
             incrRedisStock(Long.parseLong(productRes.getProductId()));
             //清除掉本地localCache已经售完的标记
-            localCache.remove(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX+productRes.getProductId());
+            localCache.remove(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productRes.getProductId());
             //通知服务群,清除本地售罄标记缓存
-            if(shouldPublishCleanMsg(productRes.getProductId())){
-                redisUtils.publish("cleanLocalCache",productRes.getProductId());
+            if (shouldPublishCleanMsg(productRes.getProductId())) {
+                redisUtils.publish("cleanLocalCache", productRes.getProductId());
             }
             throw new ExceptionCustomer("创建订单失败", -1);
         }
@@ -245,10 +252,11 @@ public class OrderServiceImpl implements IOrderService {
 
     /**
      * 判断是否需要通知服务群,清除本地售罄标记缓存
+     *
      * @param productId
      * @return
      */
-    public boolean shouldPublishCleanMsg(String productId){
+    public boolean shouldPublishCleanMsg(String productId) {
         Integer stock = Integer.parseInt(redisUtils.get(ApiBaseConstants.RedisKeyPrefix.MIAOSHA_STOCK_CACHE_PREFIX + productId));
         return (stock == null || stock <= 0);
     }

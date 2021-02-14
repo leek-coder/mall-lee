@@ -20,6 +20,8 @@ public class QuickOrderReq implements Serializable {
      */
     private Long userId;
 
+    private  String token;
+
     public String getProductId() {
         return productId;
     }
@@ -34,6 +36,14 @@ public class QuickOrderReq implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

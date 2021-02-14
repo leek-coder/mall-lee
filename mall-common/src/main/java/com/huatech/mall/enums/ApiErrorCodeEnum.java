@@ -27,6 +27,15 @@ public enum ApiErrorCodeEnum {
     AUTH_REMOTE_FAIL(5002, "远程调用鉴权服务失败"),
     PRODUCT_ID_NOT_NULL(3003, "请选择秒杀商品"),
     PRODUCT_NOT_EXISTS(3001,"商品不存在"),
+    VALIDATE_FAILED(404, "参数检验失败"),
+    AUTHORIZATION_HEADER_IS_EMPTY(600,"请求头中的token为空"),
+    GET_TOKEN_KEY_ERROR(601,"远程获取TokenKey异常"),
+    GEN_PUBLIC_KEY_ERROR(602,"生成公钥异常"),
+    JWT_TOKEN_EXPIRE(603,"token校验异常"),
+    TOMANY_REQUEST_ERROR(429,"后端服务触发流控"),
+    BACKGROUD_DEGRADE_ERROR(604,"后端服务触发降级"),
+    BAD_GATEWAY(502,"网关服务异常"),
+    FORBIDDEN(403, "没有相关权限"),
     ;
     private Integer code;
     private String message;
