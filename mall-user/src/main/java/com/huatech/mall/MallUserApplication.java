@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan(basePackages = {"com.jrx.common.exception"})
+@ComponentScan(basePackages = {"com.huatech.mall.exception"})
 public class MallUserApplication {
 
     public static void main(String[] args) {

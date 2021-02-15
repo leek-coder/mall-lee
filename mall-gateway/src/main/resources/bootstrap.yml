@@ -1,8 +1,6 @@
 spring:
   profiles:
-    active: dev
-server:
-  port: 8888
+    active: prod
 
 ---
 spring:
@@ -10,10 +8,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr:  192.168.2.251:8848
+        server-addr:  47.95.212.30:8848
         namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
       config:
-        server-addr:  192.168.2.251:8848
+        server-addr:  47.95.212.30:8848
         namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
         file-extension: yaml
         group: DEFAULT_GROUP
@@ -37,17 +35,14 @@ spring:
 
 
 ---
-#测试环境  读写分离
+#正式环境
 spring:
-  profiles: test
+  profiles: prod
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.2.251:8848
-        namespace: dae3b1df-1dae-477c-a6dc-d6015998c879
-      config:
-        server-addr:  192.168.2.251:8848
-        namespace: fdbf9a9a-45cd-4807-a1f6-2361d364a35b
-        file-extension: yaml
-        group: DEFAULT_GROUP
-
+        server-addr: 47.95.212.30:8848
+        namespace: fab18c63-f479-4def-b1b8-b753fccfa6d2
+logging:
+  level:
+    org.springframework.cloud.gateway: debug   #info warn
