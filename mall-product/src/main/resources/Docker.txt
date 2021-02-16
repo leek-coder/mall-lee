@@ -1,0 +1,105 @@
+使用Docker可以更快的打包，测试以及部署应用程序，并可以缩短从编写到部署运行代码的周期
+
+容器：容器是镜像的可运行实例。镜像和容器的关系就有点类似于面向对象中，类和对象的关系
+
+Docker命令：
+
+docker version
+
+docker search java
+
+docker pull java
+
+docker images
+
+docker images | grep java
+
+删除本地镜像
+docker rmi  java
+
+删除所有镜像
+docker rmi $(docker images -q)
+
+
+容器相关命令：
+
+docker run -d -p 90:80 nginx
+
+列出所有正在运行的容器
+docker ps
+
+停止容器
+docker stop  id
+
+启动已经停止的容器
+docker start id
+
+
+进入容器
+docker exec -it  xxxx /bin/bash
+
+查看容器的相关信息
+docker inspect  xxxx
+
+删除容器
+docker rm xxxx
+
+查看容器日志
+docker container logs xxxx
+
+查看容器里的进程
+docker top xxxx
+
+容器与宿主机相互复制文件
+docker cp xxxx :/etc/nginx/nginx.conf  /User/like/Desktop/xxx.conf
+
+看容器的大小
+du -sh *
+
+
+
+
+使用Dockerfile构建docker镜像
+1：编写Dockerfile文件
+2：在Dockerfile文件所在路径执行以下命令构建镜像
+   docker build -t nginx:leek .  #-t指定镜像的名称，命令最后的.标示dockerfile文件所在的目录
+
+ADD<src,dest>:添加文件，从src目录复制文件到容器的dest，其中src可以是Dockerfile所在目录的相对路径，也可以是一个URL，还可以是一个
+压缩包
+
+
+
+
+=========================docker compose===============================
+docker-compose --version
+
+compose的使用十分的简单，只需要编写一个docker-compose.yml，然后使用docker-compose命令操作即可，docker-compose.yml描述了
+容器的配置
+
+docker-compose up -d
+
+docker-compose up -d  --build 会重启打出镜像发布
+
+
+如果不是docker-compose.yml
+
+docker compose -f  xxx.yml   up -d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
