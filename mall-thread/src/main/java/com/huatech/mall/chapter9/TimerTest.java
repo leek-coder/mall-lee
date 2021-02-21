@@ -2,6 +2,7 @@ package com.huatech.mall.chapter9;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author like
@@ -18,6 +19,7 @@ public class TimerTest {
             }
         };
         timer.schedule(timerTask,1000,1000);
+
 
     }
 }

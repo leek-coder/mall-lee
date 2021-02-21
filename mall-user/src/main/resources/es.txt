@@ -118,8 +118,6 @@ POST /index/type/_bulk
 
 
 
-
-
 PUT /ems
 {
   "mappings": {

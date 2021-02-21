@@ -15,6 +15,7 @@ import java.util.Random;
  **/
 public class HeartBeatClient {
     public static void main(String[] args) throws Exception {
+
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         try {
             Bootstrap bootstrap = new Bootstrap();
@@ -25,7 +26,7 @@ public class HeartBeatClient {
                             ChannelPipeline pipeline = ch.pipeline();
                             pipeline.addLast("decoder", new StringDecoder());
                             pipeline.addLast("encoder", new StringEncoder());
-                            pipeline.addLast(new HeartBeatClientHandler());
+                              pipeline.addLast(new HeartBeatClientHandler());
                         }
                     });
 

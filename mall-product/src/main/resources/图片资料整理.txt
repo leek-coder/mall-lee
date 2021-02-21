@@ -1,0 +1,80 @@
+===============================ElasticSearch==================================
+"mappings":{
+  "_doc":{
+       "properties":{
+            "name":{
+              "type":"text",
+              "analyzer":"ik_syno_max",
+              "search_analyzer":"ik_syno"
+            }
+       }
+  }
+}
+
+PUT /ems
+{
+    "settings":{
+      "number_of_shards":2,
+      "number_of_replicas":1,
+      "analysis":{
+         "filter":{
+            "my_synonym_filter":{
+              "type":"synonym",
+              "synonym_path":"analysis-ik/synonym.txt"
+            }
+         }
+      },
+      "analyzer":{
+        "ik_syno":{
+          "type":"custom",
+          "tokenizer":"ik_smart",
+          "filter":["my_synonym_filter"]
+        },
+        "ik_syno_max":{
+          "type":"custom",
+          "tokenizer":"ik_max_word",
+          "filter":["my_synonym_filter"]
+        }
+      }
+    },
+
+      "mappings":
+      {
+           "emp":
+           {
+             "properties":
+             {
+                "id":
+                {
+                   "type":"text",
+                   "index":false,
+                   "analyzer":"ik_max_word",
+                   "search_analyzer":"ik_smart"
+
+                },
+                "name":{
+                 "type":"keyword"
+                },
+                "age":{
+                 "type":"integer"
+                 }
+
+             }
+           }
+      }
+}
+
+#多字段查询  能分词，不会指定分词器
+GET /ems/emp/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "中国",
+      "fields": ["name","content"],
+      "type":"cross_fields"
+    }
+  }
+}
+
+
+===============================ElasticSearch==================================

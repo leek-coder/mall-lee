@@ -1,0 +1,15 @@
+SPI在哪些框架里有使用
+Dubbo，Springboot，SpringCloud，SpringCloud Alibaba，ShardingShphere
+
+ServletContainerInitializer接口
+AbstractDispatcherServletInitializer
+AbstractContextLoaderInitializer
+
+ContextLoaderListener的作用是：带动父容器刷新
+DispatcherServlet的作用：带动子容器的刷新
+
+
+
+=========================================Spring事务解析==============================
+
+PlatformTransactionManager
