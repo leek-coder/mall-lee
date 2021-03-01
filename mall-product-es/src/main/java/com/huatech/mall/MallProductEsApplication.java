@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  **/
 @SpringBootApplication
 @MapperScan(basePackages = "com.huatech.mall.mapper")
-@ComponentScan(basePackages = {"com.jrx.common.exception", "com.huatech.mall"})
+@ComponentScan(basePackages = {"com.huatech.mall.exception", "com.huatech.mall"})
 public class MallProductEsApplication {
 
     public static void main(String[] args) {
