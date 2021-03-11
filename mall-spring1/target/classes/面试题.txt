@@ -1,0 +1,37 @@
+===================================Spring面试题==============================
+1：谈谈你对Spring ioc的理解
+控制反转带来的好处是：业务代码和我们组件创建的代码彻底分离开来实现了解藕，我们只需要关心业务代码，不需要关心我们需要的
+组件是如何创建出来的。
+有了依赖注入，可能会发生一个致命的问题：循环依赖
+
+2：Spring导入Bean有多少种方式
+
+
+xml
+@Bean
+@import
+@ComponentScan + @component + @Service +@Repository + @controller
+FactoryBean
+
+被Spring识别成什么东西？
+BeanDefinition
+
+什么叫做Bean定义？和单例bean对象有什么区别？
+
+Bean的定义信息可以修改吗？
+
+可以：
+BeanFactoryPostProcessor
+BeanDefinitionRegistryPostProcessor
+ImportBeanDefinitionRegistrar
+
+
+2)修改Bean的定义，在源码中有哪些实际的应用呢？
+
+
+
+
+
+
+
+
